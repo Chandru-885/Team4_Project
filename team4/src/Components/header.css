@@ -1,0 +1,42 @@
+  .header-color{
+    background-color: #131a22 !important; 
+  }
+
+  .headerLogo{
+    margin-left: 20px;
+    margin-right: 5px;
+  }
+  
+  .headerName{
+    display: inline;
+    font-size: 30px;
+    color: red;
+    font-weight: 600;
+    font-family: "Lucida Console", "Courier New"
+  }
+  
+  .headerSearchBar{
+    display: inline !important;
+    text-align: center;
+    width: 400px !important;
+    border-radius: 5px !important;
+    /* border: 1px solid red !important; */
+  }
+  
+  .headerSearchButton{
+    display: inline !important;
+    color: red !important;
+    background-color: white !important;
+    /* border: 1px solid red !important; */
+    border-radius: 5px !important;
+    margin-left: 5px;
+  }
+  
+  .headerSearchButton:hover{
+    color: white !important;
+    background-color: red !important;
+  }
+  
+  .headerButtons{
+    margin-right: 20px;  
+  }
