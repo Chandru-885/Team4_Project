@@ -3,41 +3,52 @@ import { Navbar, Nav, FormControl, Form, Button } from 'react-bootstrap';
 import './header.css'
 import {Link} from "react-router-dom";
 import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
+import logo from './images/logo.JPG'
 
 export default class Header extends Component {
+    constructor(props){
+        super(props);
+        this.state = {searchelement : "" }
+    }
+    SearchElement(event) {
+        let searchdata = event.target.value;
+        this.setState({searchelement : searchdata})
+        console.log("searchelement",this.state.searchelement)
+    }
     render() {
         return (
-            <Router>
             <div className="header-color">
-                <Navbar bg="dark" expand="lg" className = "p-4" >   
-                    <Navbar.Brand href="#home">
+                <Navbar bg="primary" expand="lg" className = "p-4" >   
+                    <Navbar.Brand>
                         <Link to = {'/'}>
-                            <img
+                        <div className="align-img-text">
+                            {/* <img
                             alt=" logo "
-                            src="https://www.pinclipart.com/picdir/big/345-3457898_totalcard-bookstore-all-time-conspiracies-logo-clipart.png"
-                            width="40"
-                            height="40"
-                            className="d-inline-block align-top headerLogo"
-                            />{' '}
+                            src={logo}
+                            width="80"
+                            // height="80"
+                            className="d-inline-block align-top headerLogo mt-0"
+                            /> */}
                             <p className="headerName">BOOK STORE</p>
+                            </div>
                         </Link>
+                       
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
                         <Form inline>
-                            <FormControl type="text" placeholder="Search by Bookname" className="headerSearchBar" />
-                            <Button className="headerSearchButton"><i class="fa fa-search"></i></Button>
+                            <FormControl type="text" onChange={this.SearchElement.bind(this)} placeholder="Search" className="headerSearchBar" />
+                            <Link to={"/headersearchresults/"+this.state.searchelement}><Button className="headerSearchButton"><i class="fa fa-search"></i></Button></Link>
                         </Form>
                     </Navbar.Collapse>
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                         <Nav className="justify-content-end headerButtons">
-                        <Nav.Link href="#login"><Button variant="outline-success">Login</Button></Nav.Link>
-                        <Nav.Link href="#signup"><Button variant="outline-danger">Sign Up</Button></Nav.Link>
+                        <Nav.Link href="#login"><Button variant="success">Login</Button></Nav.Link>
+                        <Nav.Link href="#signup"><Button variant="info">Sign Up</Button></Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
              </div>
-             </Router>
         )
     }
 }

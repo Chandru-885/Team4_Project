@@ -42,6 +42,8 @@ const BooksSchema = new Schema({
     
 });
 
+BooksSchema.index({title: "text", author: "text"})
+
 // 3. Model from Schema (object from schema)
 const Books = mongoose.model('Books', BooksSchema);
 

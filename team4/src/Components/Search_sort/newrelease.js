@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
-import {Button,Card,Row,Container} from 'react-bootstrap' 
+import {Card,Container} from 'react-bootstrap' 
 import fiction2  from "../images/nonfic3.JPG"
+import SearchPage from '../searchbar'
+// import Rating from '../Body/Rating'
+import './search.css'
 import { FaCartPlus } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa"
 import { FaStar } from "react-icons/fa"
 
 
-export default class NewRelease extends Component {
+export default class NewReleasePage extends Component {
 
     constructor(){
         super();
@@ -27,7 +30,7 @@ export default class NewRelease extends Component {
 
     render() {
         var newreleaselist = this.state.newrelease.map((books, i)=>{
-            if(i < 4){
+            //if(i < 4){
             return(
 
                 <div className="col-4 col-sm-4 col-md-3 col-lg-3" key={i} style={{maxWidth:"280px"}}>
@@ -76,12 +79,36 @@ export default class NewRelease extends Component {
                     </Card>
                 </div>
             )
-            }
+            //}
         })
         
         return (
             <>
-                {newreleaselist}    
+            <div className="Main">
+                <div className="row">
+                    <div className="col-3 col-sm-3 col-md-2 col-xl-2 col-ls-2">
+                        <div className="search-option-catagory">
+                            <SearchPage/>
+                        </div>
+                    </div>
+
+                    <div className="col-9 col-sm-9 col-md-10 col-xl-10 col-ls-10">
+                        <div className="search-sidecontent">
+                        <div className="row mt-3">
+                        <h2>New Releases</h2>
+                        <Container>
+                            <div className="row">
+                                {newreleaselist} 
+                            </div>
+                        </Container>
+
+                        </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            
             </>
         )
     }

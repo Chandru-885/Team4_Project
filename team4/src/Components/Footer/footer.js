@@ -6,9 +6,9 @@ export default class Footer extends Component {
     render() {
     return (
         <div>
-            <div className="container-fluid bg-dark px-0">
+            <div className="container-fluid bg-primary px-0">
                 {/* <Link to =  {'/'} className="btn btn-dark btn-block mb-5">Back to Top</Link> */}
-                <a href = "#"  className="btn btn-dark btn-block mb-5">Back to Top </a> 
+                <a href = "#"  className="btn btn-light btn-block mb-5">Back to Top </a> 
 
  
                 <div className="container">
@@ -63,7 +63,7 @@ export default class Footer extends Component {
 
 
 
-            <div className="bottom">
+            <div className="bottom bg-primary">
                 <div className="container">
 
                     <div className="row pt-5 text-white">

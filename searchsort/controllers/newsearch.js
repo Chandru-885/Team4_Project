@@ -37,4 +37,12 @@ const findDataBasedOnLanguage = async (req,res,next)=>{
     else next({message:"no record found"});
 }
 
-module.exports = {insertdata,findAlldata,findDataBasedOnTitle,findDataBasedOnAuthor,findDataBasedOnLanguage};
+const findDataBasedOnSearchItem = async (req,res,next)=>{
+    let searchData=await Books.find({ $text : { $search : req.params.searchitem, $caseSensitive: false } });
+    if(searchData.length !=0){
+        res.json(searchData);
+        console.log(searchData);}
+    else next({message:"no record found"});
+}
+
+module.exports = {insertdata,findAlldata,findDataBasedOnTitle,findDataBasedOnAuthor,findDataBasedOnLanguage,findDataBasedOnSearchItem};

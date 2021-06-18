@@ -1,249 +1,132 @@
-import React from "react";
-// import "bootstrap/dist/css/bootstrap.min.css";
-import { Card, CardColumns } from "react-bootstrap";
-import book1 from "../images/fiction1.JPG"
-import book2 from "../images/fiction2.JPG"
-import book3 from "../images/fiction3.JPG"
-import book4 from "../images/fiction4.JPG"
-import book5 from "../images/fiction5.JPG"
-import nonfic1 from "../images/nonfic1.JPG"
+import React, { Component } from 'react'
+import {Button,Card,Row,Container} from 'react-bootstrap' 
 import nonfic2  from "../images/nonfic2.JPG"
-import nonfic3  from "../images/nonfic3.JPG"
-import nonfic4  from "../images/nonfic4.JPG"
-import nonfic5  from "../images/nonfic5.JPG"
+import SearchPage from '../searchbar';
+import { FaCartPlus } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa"
+import { FaStar } from "react-icons/fa"
+import TodayDealsPage from './todaydeals'
+import NewRelease from './newrelease';
+import PopularBookPage from './popularbook'
 
-//Mixed Collection
+export default class AllBooksPage extends Component {
 
-function MixedDisplay() {
-  return (
-    <div style={{
-      width:"1100px",
-      margin:"auto"
-    }}>
-      <h3>Mixed Collections</h3>
-      <div class="row row-cols-1 row-cols-md-5">
-      <div class="col mb-4">
-        <div class="card">
-          <img src={book1} class="card-img-top" alt="..." height="250px" />
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">A Game of Thrones by George R.R. Martin</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 1,234.55</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={book2} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">To Kill a Mockingbird by Harper Lee</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 370.17</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={book3} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}}class="card-title">The Andromeda Strain</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 998.00</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={book4} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">The Count of Monte Cristo by Alexandre Dumas</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 560.77</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={book5} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">State of Wonder by Ann Patchett</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 780.67</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={nonfic1} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">Guns, Germs, and Steel: The Fates of Human Societies</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 1,120.00</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={nonfic2} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">A Brief History of Time by Stephen Hawking</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 390.66</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={nonfic3} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">The Writer's Journey: Mythic Structure for Writers by Christopher Vogler</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 1,505.55</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={nonfic4} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">Manual for Living by Epictetus</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 1,394.00</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={nonfic5} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">The Checklist Manifesto: How to Get Things Right by Atul Gawande</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 591.00</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  );
+    constructor(){
+        super();
+        this.state = {allbooks : []}
+    }
+
+    componentDidMount(){
+        fetch('http://localhost:4000'+'/books',{
+            headers:{'content-type': 'application/json'},
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            this.setState({allbooks : data.data})
+        });
+        console.log("alldeals",this.state.allbooks)
+   }
+
+   
+
+    render() {
+        var allbookslist = this.state.allbooks.map((books, i)=>{
+            // if(i < 4){
+            return(
+                <div className="col-4 col-sm-4 col-md-3 col-lg-3" key={i} style={{maxWidth:"280px"}}>
+                    
+                    <Card className="card-top border-0 mb-4 ">
+                        <a href={""}>
+                            <Card.Img className="card-header bg-white " src={nonfic2} variant="top" />
+                        </a>
+                        <Card.Body className="card-body text-dark" >
+                            <a style={{ textDecoration: "none" }} href={""}>
+                                <Card.Title as="div" className="text-dark">
+                                    <strong >{books.title}</strong>
+                                    <br></br>
+                                    <strong style={{fontWeight:"normal"}}>{books.author}</strong>
+                                </Card.Title>
+                            </a>
+                           
+                            <Card.Text as="div">
+                                <strong>Rs. {books.price}</strong>
+                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}}><i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i></button> 
+                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}}><i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i></button>
+                                
+                                <br></br>   
+                            </Card.Text>
+                           
+                            {/*<Card.Text as="div">
+                                <Rating value={books.ratings} text={`reviews`} />
+                            </Card.Text>*/}
+                            
+                            <Card.Text as="div">
+                                <strong style={{float:"left"}} variant="link">
+                                        <i className="text-warning"><FaStar/></i>
+                                        <i className="text-warning"><FaStar/></i>
+                                        <i className="text-warning"><FaStar/></i>
+                                        <i className="text-warning"><FaStar/></i>
+                                        <i className="text-warning"><FaStar/></i>
+                                    </strong>
+                                <strong style={{marginLeft:"10px"}}>({books.discount}%)</strong>
+                            </Card.Text>
+
+
+                            {/* <Card.Text as="div" className="card-text">
+                                {product.description}
+                            </Card.Text> */}
+                        </Card.Body>
+                    </Card>
+                </div>
+            )
+            // }
+        })
+        
+        return (
+            <>
+            <div className="Main">
+                <div style={{
+                    width:"1100px",
+                    margin:"auto"
+                }}>
+                <h3>Mixed Collections</h3>
+                    <Container>
+                        <div className="row">
+                            {allbookslist} 
+                        </div>
+                    </Container>
+                </div>
+
+                <div style={{ width:"1100px", margin:"auto"}}>
+                  <h3>Today Deals</h3>
+                  <Container>
+                    <div className="row">
+                      <TodayDealsPage/>
+                    </div>
+                  </Container>
+                </div>
+
+                <div style={{ width:"1100px", margin:"auto"}}>
+                  <h3>New Releases</h3>
+                  <Container>
+                    <div className="row">
+                      <NewRelease/>
+                    </div>
+                  </Container>
+                </div>
+
+                <div style={{ width:"1100px", margin:"auto"}}>
+                  <h3>Popular Books</h3>
+                  <Container>
+                    <div className="row">
+                      <PopularBookPage/>
+                      
+                    </div>
+                  </Container>
+                </div>
+            </div>
+            
+            </>
+        )
+    }
 }
-
-function PopularDisplay() {
-  return (
-    <div style={{
-      width:"1100px",
-      margin:"auto"
-    }}>
-      <h3>Popular Books</h3>
-      <div class="row row-cols-1 row-cols-md-5">
-      <div class="col mb-4">
-        <div class="card">
-          <img src={book1} class="card-img-top" alt="..." height="250px" />
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">A Game of Thrones by George R.R. Martin</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 1,234.55</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={book3} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}}class="card-title">The Andromeda Strain</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 998.00</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={book5} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">State of Wonder by Ann Patchett</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 780.67</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={nonfic2} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">A Brief History of Time by Stephen Hawking</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 390.66</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={nonfic4} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">Manual for Living by Epictetus</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 1,394.00</p>
-          </div>
-        </div>
-      </div> 
-    </div>
-  </div>
-  
-  );
-}
-
-function NewReleases() {
-  return (
-    <div style={{
-      width:"1100px",
-      margin:"auto"
-    }}>
-      <h3>Featured New Release Books</h3>
-      <div class="row row-cols-1 row-cols-md-5">
-      <div class="col mb-4">
-        <div class="card">
-          <img src={book2} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">To Kill a Mockingbird by Harper Lee</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 370.17</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={book4} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">The Count of Monte Cristo by Alexandre Dumas</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 560.77</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={nonfic1} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">Guns, Germs, and Steel: The Fates of Human Societies</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 1,120.00</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={nonfic3} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">The Writer's Journey: Mythic Structure for Writers by Christopher Vogler</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 1,505.55</p>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-4">
-        <div class="card">
-          <img src={nonfic5} class="card-img-top" alt="..." height="250px"/>
-          <div class="card-body">
-            <h5 style={{fontSize:"15px", color:"blue",textAlign:"center"}} class="card-title">The Checklist Manifesto: How to Get Things Right by Atul Gawande</h5>
-            <p class="card-text" style={{color:'red',textAlign:"center"}}>Price - INR 591.00</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  );
-}
-
-function Booklist() {
-  return (
-    <div style={{marginTop:"20px"}}>
-      <MixedDisplay/>
-      <PopularDisplay/>
-      <NewReleases/>
-    </div>
-  );
-}
-
-export default Booklist;

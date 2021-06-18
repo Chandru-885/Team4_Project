@@ -1,35 +1,33 @@
 .Main{
     width: 100%;
     box-sizing: border-box;
-    background-color: rgb(248, 248, 247);
+    background-color: rgb(248, 248, 248);
 }
 
 .search-option-catagory{
     /* width: 30%; */
-    background-color: rgb(248, 247, 245);
+    background-color: rgb(248, 248, 248);
+    
 }
 
 .search-sidecontent{
     /* width: 70%; */
-    background-color: rgb(248, 246, 244);
+    background-color: rgb(248, 248, 248);
 }
 
-.search1{
-    color: red;
+.card-top {
+    width: 17rem;
+    background-color: white;
 }
 
-.custom-btn {
-  color: black;
-  min-width: 50%;
-  width: 10%;
-  
+.card-header {
+    background-color: white;
+    max-height: 250px;
 }
 
-.pTagAsLinkTag{
-    line-height: 0px;
-    color: black;
+.bglight{
+    background-color: aliceblue;
+    color: aqua;
 }
 
-.pTagAsLinkTag :hover{
-    cursor: pointer;
-}
+

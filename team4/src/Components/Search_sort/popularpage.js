@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import {Button,Card,Row,Container} from 'react-bootstrap' 
 import './search.css'
-import { FaStar } from "react-icons/fa";
 import fiction2  from "../images/fiction1.JPG"
 import ProductDetailspage from '../Body/description.js';
 import {Link} from "react-router-dom";
 import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
+import SearchPage from '../searchbar';
+import { FaCartPlus } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa"
+import { FaStar } from "react-icons/fa"
 
 export default class PopularPage extends Component {
 
@@ -27,7 +30,7 @@ export default class PopularPage extends Component {
     }
 
    nextpage(){
-    this.props.history.push('/productdescription')
+    this.props.history.push('/description')
    }
 
    all(){
@@ -79,30 +82,57 @@ export default class PopularPage extends Component {
         var popularbookslist = this.state.popularbooks.map((books, i)=>{
             // if(i < 4){
             return(
-                <Router>
-                    <div className="col-4 col-sm-4 col-md-3 col-xl-3" key={i}>
-                        
-                            <Card className="border-0" onClick={this.nextpage.bind(this)}>
-                            <Link to="/bookdescription"> 
-                                  <Card.Img variant="top" src={fiction2} height="100px"/>
-                             </Link> 
-                            <Card.Body className="text-center">
-                                <Card.Title className="text-primary"><b>{books.title}</b></Card.Title>
-                                <Card.Text >
-                                    <p className="card-text text-info"><b>Price @ ₹{books.price}</b></p>
-                                    <p className="card-text text-success"><b>Ratings {books.ratings} </b></p>
-                                </Card.Text>
-                        </Card.Body>
-                        </Card>
-                        
+                <div className="col-4 col-sm-4 col-md-3 col-lg-3" key={i} style={{maxWidth:"280px"}}>
+                    
+                    <Card className="card-top border-0 mb-4 ">
+                       <Link to="/description"> 
+                        {/* <a href={""}> */}
+                            <Card.Img className="card-header bg-white " src={fiction2} variant="top" />
+                        {/* </a> */}
+                        </Link>
+                        <Card.Body className="card-body text-dark" >
+                            <a style={{ textDecoration: "none" }} href={""}>
+                                <Card.Title as="div" className="text-dark">
+                                    <strong >{books.title}</strong>
+                                    <br></br>
+                                    <strong style={{fontWeight:"normal"}}>{books.author}</strong>
+                                </Card.Title>
+                            </a>
+                           
+                            <Card.Text as="div">
+                                <strong>Rs. {books.price}</strong>
+                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}}><i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i></button> 
+                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}}><i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i></button>
+                                
+                                <br></br>   
+                            </Card.Text>
+                           
+                            {/*<Card.Text as="div">
+                                <Rating value={books.ratings} text={`reviews`} />
+                            </Card.Text>*/}
+                            
+                            <Card.Text as="div">
+                                <strong style={{float:"left"}} variant="link">
+                                        <i className="text-warning"><FaStar/></i>
+                                        <i className="text-warning"><FaStar/></i>
+                                        <i className="text-warning"><FaStar/></i>
+                                        <i className="text-warning"><FaStar/></i>
+                                        <i className="text-warning"><FaStar/></i>
+                                    </strong>
+                                <strong style={{marginLeft:"10px"}}>({books.discount}%)</strong>
+                            </Card.Text>
 
-                        <Switch>
-                        <Route path="/bookdescription" component={ProductDetailspage}></Route>
-                        </Switch>
-                    </div>
-                 </Router>
+
+                            {/* <Card.Text as="div" className="card-text">
+                                {product.description}
+                            </Card.Text> */}
+                        </Card.Body>
+                    </Card>
+                    {/* <Switch>
+                        <Route path="/description" component={ProductDetailspage}></Route>
+                    </Switch> */}
+                </div>
             )
-            // }
         })
         
         return (
@@ -111,77 +141,12 @@ export default class PopularPage extends Component {
                 <div className="row">
                     <div className="col-3 col-sm-3 col-md-2 col-xl-2 col-ls-2">
                         <div className="search-option-catagory">
-                            <div>
-                                <div className="search1">
-                                    <h2>Search</h2>
-                                </div>
-                                
-                                <div className="pTagAsLinkTag">
-                                    <h6>Price</h6>
-                                    <p variant="link" onClick={this.all.bind(this)}>All</p> <br></br>
-                                    <p variant="link" onClick={this.below500.bind(this)}>Below 500</p> <br></br>
-                                    <p variant="link" onClick={this.AboveEqual500.bind(this)}>500 and Above</p> <br></br>
-                                    <p variant="link" onClick={this.AboveEqual1000.bind(this)}>1000 and Above </p> <br></br>
-                                </div><br></br>
-                                <div className="pTagAsLinkTag">
-                                    <h6>Discount</h6>
-                                    <p variant="link" onClick={this.all.bind(this)}>All</p> <br></br>
-                                    <p variant="link" onClick={e => alert('50')}>50% and Above</p> <br></br>
-                                    <p variant="link" onClick={e => alert('30')}>30% and Above</p> <br></br>
-                                    <p variant="link" onClick={e => alert('10')}>10% and Below</p> <br></br>
-                                </div><br></br>
-                                <div className="pTagAsLinkTag">
-                                    <h6>Reviews</h6>
-                                    <p variant="link" onClick={this.all.bind(this)}>All</p> 
-                                    <p variant="link" onClick={e => alert('1star')}>
-                                        <i className="text-warning"><FaStar/></i>
-                                    </p>
-                                    <p variant="link" onClick={e => alert('1star')}>
-                                        <i className="text-warning"><FaStar/></i>
-                                        <i className="text-warning"><FaStar/></i>
-                                    </p>
-                                    <p variant="link" onClick={e => alert('1star')}>
-                                        <i className="text-warning"><FaStar/></i>
-                                        <i className="text-warning"><FaStar/></i>
-                                        <i className="text-warning"><FaStar/></i>
-                                    </p>
-                                    <p variant="link" onClick={e => alert('1star')}>
-                                        <i className="text-warning"><FaStar/></i>
-                                        <i className="text-warning"><FaStar/></i>
-                                        <i className="text-warning"><FaStar/></i>
-                                        <i className="text-warning"><FaStar/></i>
-                                    </p>   
-                                    <p variant="link" onClick={e => alert('1star')}>
-                                        <i className="text-warning"><FaStar/></i>
-                                        <i className="text-warning"><FaStar/></i>
-                                        <i className="text-warning"><FaStar/></i>
-                                        <i className="text-warning"><FaStar/></i>
-                                        <i className="text-warning"><FaStar/></i>
-                                    </p>
-                                <div>
-                                    <h5>Sort</h5>
-                                        <h6>Price</h6>
-                                            <Button variant="link" className="custom-btn" onClick={e => alert('Low To High')}>Low To High</Button> <br></br>
-                                            <Button variant="link" className="custom-btn" onClick={e => alert('High To Low')}>High To Low</Button> <br></br>
-                                </div><br></br>
-                                <div>
-                                    <h6>Discount</h6>
-                                    <Button variant="link" className="custom-btn" onClick={e => alert('Low To High')}>Low To High</Button> <br></br>
-                                    <Button variant="link" className="custom-btn" onClick={e => alert('High To Low')}>High To Low</Button> <br></br>
-                                </div><br></br>
-                                <div>
-                                    <h6>Languages</h6>
-                                    <Button variant="link" className="custom-btn" onClick={e => alert('English')}>English</Button> <br></br>
-                                    <Button variant="link"className="custom-btn" onClick={e => alert('Tamil')}>Tamil</Button> <br></br>
-                                    <Button variant="link" className="custom-btn" onClick={e => alert('Hindi')}>Hindi</Button> <br></br>
-                                </div>
-                            </div>
-                        </div>
+                            <SearchPage/>
                     </div>
                     </div>
                     <div className="col-9 col-sm-9 col-md-10 col-xl-10 col-ls-10">
                         <div className="search-sidecontent">
-                            <div className="row">
+                            <div className="row mt-3">
                             <h2>Popular Books</h2>
                             {/* <Container> */}
                                 <div className="row">

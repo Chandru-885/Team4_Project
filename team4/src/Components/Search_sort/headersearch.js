@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import {Card,Container} from 'react-bootstrap' 
-import './search.css'
+import {Button,Card,Row,Container} from 'react-bootstrap' 
 import nonfic2  from "../images/nonfic2.JPG"
 import SearchPage from '../searchbar';
 import { FaCartPlus } from "react-icons/fa";
@@ -8,22 +7,26 @@ import { FaHeart } from "react-icons/fa"
 import { FaStar } from "react-icons/fa"
 import {Link} from "react-router-dom";
 
-export default class AllBooksPage extends Component {
 
+export default class Headersearch extends Component {
     constructor(){
         super();
-        this.state = {allbooks : [], prev:false, next:true, showprev:true, shownext:true, current:1,paginate:[]}
+        this.state = {headersearch : [], prev:false, next:true, showprev:true, shownext:true, current:1,paginate:[]}
     }
 
+
     componentDidMount(){
-        fetch('http://localhost:4000'+'/books',{
+        const { match: { params } } = this.props;
+        console.log(this.props);
+        fetch('http://localhost:4000/books/CommonSearch/'+params.searchelement,{
             headers:{'content-type': 'application/json'},
         })
         .then(res=>res.json())
         .then(data=>{
-            this.setState({allbooks : data.data, paginate : data.pagination})
+            this.setState({headersearch : data,paginate : data.pagination})
         });
-   }
+        console.log("alldeals",this.state.headersearch)
+    }
 
     changenext(){
         var cur = this.state.current;
@@ -32,7 +35,7 @@ export default class AllBooksPage extends Component {
         }else{
             this.setState({current: this.state.current+1})
             cur=cur+1
-            fetch(`http://localhost:4000/books?page=${cur}&limit=12`,{
+            fetch(`http://localhost:4000/books/CommonSearch/?page=${cur}&limit=12`,{
                 headers:{'content-type': 'application/json'},
             })
             .then(res=>res.json())
@@ -49,7 +52,7 @@ export default class AllBooksPage extends Component {
         }else{
             this.setState({current: this.state.current-1})
             cur = cur-1
-            fetch(`http://localhost:4000/books?page=${cur}&limit=12`,{
+            fetch(`http://localhost:4000/books/CommonSearch/?page=${cur}&limit=12`,{
                 headers:{'content-type': 'application/json'},
             })
             .then(res=>res.json())
@@ -60,13 +63,19 @@ export default class AllBooksPage extends Component {
     }
 
     render() {
-        console.log("alldeals",this.state.allbooks)
-        console.log("pagination",this.state.paginate)
-    
-        var allbookslist = this.state.allbooks.map((books, i)=>{
+       var len = this.state.headersearch.length
+       if(!len){
+        var newsearchresultslist =(
+            <div className="alert alert-dismissible alert-danger m-3">
+                {/* <button type="button" class="btn-close" data-bs-dismiss="alert"></button> */}
+                <strong>No search results found!</strong>
+            </div>
+        )
+       }else{
+        var newsearchresultslist = this.state.headersearch.map((books, i)=>{
             return(
-                <div className="col-4 col-sm-4 col-md-3 col-lg-3" key={i} style={{maxWidth:"280px"}}>
-                    
+                <div className="col-4 col-sm-4 col-md-3 col-xl-3" key={i}>
+                  
                     <Card className="card-top border-0 mb-4 ">
                         <a href={""}>
                             <Card.Img className="card-header bg-white " src={nonfic2} variant="top" />
@@ -83,12 +92,13 @@ export default class AllBooksPage extends Component {
                             <Card.Text as="div">
                                 <strong>Rs. {books.price}</strong>
                                     <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}}>
-                                         <Link to="/login"><i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i></Link>
+                                        <Link to="/loginpage"><i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i></Link> 
                                     </button>
                                     <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}}>
-                                        <Link to="/login"><i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i></Link>
-                                    </button>                                
-                                    <br></br>   
+                                        <Link to="/loginpage"><i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i></Link> 
+                                    </button>
+                     
+                                <br></br>   
                             </Card.Text>
                             
                             <Card.Text as="div">
@@ -101,38 +111,39 @@ export default class AllBooksPage extends Component {
                                     </strong>
                                 <strong style={{marginLeft:"10px"}}>({books.discount}%)</strong>
                             </Card.Text>
-
                         </Card.Body>
                     </Card>
+
                 </div>
             )
         })
-        
+       }
+     
+
         return (
-            <>
             <div className="Main">
-                <div className="row">
-                    <div className="col-3 col-sm-3 col-md-2 col-xl-2 col-ls-2">
-                        <div className="search-option-catagory">
-                            <SearchPage/>
-                        </div>
-                    </div>
-
-                    <div className="col-9 col-sm-9 col-md-10 col-xl-10 col-ls-10">
-                        <div className="search-sidecontent">
-                        <div className="row mt-3">
-                        <h2>Mixed Collections</h2>
-                        <Container>
-                            <div className="row">
-                                {allbookslist} 
-                            </div>
-                        </Container>
-
-                        </div>
-                        </div>
+            <div className="row">
+                <div className="col-3 col-sm-3 col-md-2 col-xl-2 col-ls-2">
+                    <div className="search-option-catagory">
+                        <SearchPage/>
                     </div>
                 </div>
-                <div className="float-right m-3">
+
+                <div className="col-9 col-sm-9 col-md-10 col-xl-10 col-ls-10">
+                    <div className="search-sidecontent">
+                    <div className="row mt-3">
+                    <h2>Search Results</h2>
+                    <Container>
+                        <div className="row">
+                            {newsearchresultslist} 
+                        </div>
+                    </Container>
+
+                    </div>
+                    </div>
+                </div>
+            </div>
+            {/* <div className="float-right m-3">
                     <ul class="pagination pagination-lg">
                         <li class="page-item">
                             <a class="page-link" onClick={this.changeprev.bind(this)} disabled={this.state.showprev}>Prev</a>
@@ -145,45 +156,8 @@ export default class AllBooksPage extends Component {
                         </li>
                     </ul>
 
-                </div>
-                
-
-               
-            </div>
-            
-            </>
+            </div> */}
+        </div>   
         )
     }
 }
-
-// fetchnextorprevpage(CurrentPage){
-//     fetch(`http://localhost:4000/books?page=${CurrentPage}&limit=12`,{
-//         headers:{'content-type': 'application/json'},
-//     })
-//     .then(res=>res.json())
-//     .then(data=>{
-//         this.setState({allbooks : data.data, paginate : data.pagination})
-//     });
-// }
-
-// changenext(){
-//     var cur = this.state.current;
-//     if(!this.state.paginate.next){
-//         console.log("no next page")
-//     }else{
-//         this.setState({current: this.state.current+1})
-//         cur=cur+1
-//         this.fetchnextorprevpage.bind(cur)
-//     }
-// }
-
-// changeprev(){
-//     var cur = this.state.current;
-//     if(!this.state.paginate.prev){
-//         console.log("no prev page")
-//     }else{
-//         this.setState({current: this.state.current-1})
-//         cur = cur-1
-//         this.fetchnextorprevpage.bind(cur)
-//     }
-// }

@@ -1,0 +1,19 @@
+.search1{
+    color: red;
+}
+
+.custom-btn {
+  color: black;
+  min-width: 50%;
+  width: 10%;
+  
+}
+
+.pTagAsLinkTag{
+    line-height: 0px;
+    color: black;
+}
+
+.pTagAsLinkTag :hover{
+    cursor: pointer;
+}
