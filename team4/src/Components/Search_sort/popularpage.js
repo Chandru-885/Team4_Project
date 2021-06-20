@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import {Button,Card,Row,Container} from 'react-bootstrap' 
+import {Button,Card} from 'react-bootstrap' 
 import './search.css'
 import fiction2  from "../images/fiction1.JPG"
-import ProductDetailspage from '../Body/description.js';
 import {Link} from "react-router-dom";
-import {BrowserRouter as Router,Switch,Route} from "react-router-dom";
 import SearchPage from '../searchbar';
 import { FaCartPlus } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa"
@@ -12,9 +10,9 @@ import { FaStar } from "react-icons/fa"
 
 export default class PopularPage extends Component {
 
-    constructor(){
-        super();
-        this.state = {popularbooks : []}
+    constructor(props){
+        super(props);
+        this.state = {popularbooks : [], searcheddata : props}
     }
 
 
@@ -33,52 +31,8 @@ export default class PopularPage extends Component {
     this.props.history.push('/description')
    }
 
-   all(){
-        fetch('http://localhost:4000'+'/books/?sort=-ratings',{
-            headers:{'content-type': 'application/json'},
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            this.setState({popularbooks : data.data})
-        });
-        console.log("alldeals",this.state.popularbooks)
-   }
-
-   below500(){
-    fetch('http://localhost:4000'+'/books/?sort=-ratings&price[lt]=500',{
-        headers:{'content-type': 'application/json'},
-    })
-    .then(res=>res.json())
-    .then(data=>{
-        this.setState({popularbooks : data.data})
-    });
-    console.log("below500",this.state.popularbooks)
-   }
-
-   AboveEqual500(){
-    fetch('http://localhost:4000'+'/books/?sort=-ratings&price[gte]=500',{
-        headers:{'content-type': 'application/json'},
-    })
-    .then(res=>res.json())
-    .then(data=>{
-        this.setState({popularbooks : data.data})
-    });
-    console.log("AboveEqual500",this.state.popularbooks)
-   }
-
-   AboveEqual1000(){
-    fetch('http://localhost:4000'+'/books/?sort=-ratings&price[gte]=1000',{
-        headers:{'content-type': 'application/json'},
-    })
-    .then(res=>res.json())
-    .then(data=>{
-        this.setState({popularbooks : data.data})
-    });
-    console.log("AboveEqual500",this.state.popularbooks)
-   }
-
-
     render() {
+        console.log("props.location.query",this.state.searcheddata)
         var popularbookslist = this.state.popularbooks.map((books, i)=>{
             // if(i < 4){
             return(
@@ -141,7 +95,7 @@ export default class PopularPage extends Component {
                 <div className="row">
                     <div className="col-3 col-sm-3 col-md-2 col-xl-2 col-ls-2">
                         <div className="search-option-catagory">
-                            <SearchPage/>
+                            <SearchPage />
                     </div>
                     </div>
                     <div className="col-9 col-sm-9 col-md-10 col-xl-10 col-ls-10">

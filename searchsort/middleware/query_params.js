@@ -14,7 +14,8 @@ const query_find = (model,populate) =>  async (req, res, next)=> {
         query = query.select(fields)
     }
     if(req.query.sort){
-        const sortBy = req.query.sort.split(',').join(' ');
+        var fields=req.query.sort.toString()
+        const sortBy = fields.split(',').join(' ');
         console.log("sort",sortBy);
         query = query.sort(sortBy)
     }

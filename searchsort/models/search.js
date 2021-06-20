@@ -39,6 +39,13 @@ const BooksSchema = new Schema({
         default : new Date()
         // required: [true, 'Provide a Published Date.. It is mandatory']
      },
+    sellprice : {
+        type:Number
+    },
+    category:{
+        type: String
+    }
+
     
 });
 

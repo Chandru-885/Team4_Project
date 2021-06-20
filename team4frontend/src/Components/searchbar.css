@@ -1,0 +1,59 @@
+/*Func*/
+
+.item ul, .nav input[type="checkbox"] {
+    display: none;
+}
+
+#menu:checked ~ .multi-level, .item input:checked ~ ul {
+    display: block;
+}
+
+/*Arrow*/
+
+.arrow {
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+    float: left;
+    z-index: 0;
+    margin: 10px 1em 0 1em;
+}
+
+.item input + .arrow {
+    transform: rotate(-90deg);
+    transition: 0.1s;
+}
+.item input:checked + .arrow {
+    transform: rotate(0deg);
+    transition: 0.1s;
+}
+
+.item {
+    background-color:white;
+    margin-left: 7px;
+    margin-bottom: 5px;
+}
+
+li {
+    list-style-type: circle;
+    margin-left: 35px;
+    padding: 4px;
+    cursor: pointer;
+}
+
+
+label {
+    margin-top: 4px;
+}
+
+
+/*Styles*/
+
+
+
+
+
+
+
+
+

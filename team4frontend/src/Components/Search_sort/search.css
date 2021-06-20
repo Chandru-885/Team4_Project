@@ -1,0 +1,173 @@
+.Main{
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.search-option-catagory{
+    /*width: 30%;*/
+    background-color: white;
+    margin-left: 7px;
+    margin-top: 10px;
+    
+}
+
+.search-sidecontent{
+    /* width: 70%; */
+    background-color: white;
+    
+}
+
+.card-top {
+    width: 17rem;
+    background-color: white;
+}
+
+.card-header {
+    background-color: white;
+    max-height: 250px;
+}
+
+.bglight{
+    background-color: aliceblue;
+    color: aqua;
+}
+
+.todayDealsPageCarousel{
+    display: inline-block;
+    width: 100%;
+    padding:20px;
+}
+
+.todayDealsPageCarouselImage{
+    width: 100%;
+    height: 400px;
+}
+
+.todayDealsPageCarouselContent{
+    color: black;
+    font-family: Brush Script MT, cursive;
+    position: absolute;
+    top:-340%;
+    left: 48%;
+    transform: translate(-45%, -50%);
+}
+
+#newReleasePageCard {
+    display: inline-block;
+    width: 100%;
+    padding:20px;
+}
+
+.newReleasePageCardImage{
+    width: 100%;
+    height: 400px;
+}
+
+.newReleasePageCardContent{
+    position: absolute;
+    top: 38%;
+    left: 15%;
+    color: #f7076b ;
+    animation: newReleasePageAni 3s infinite;
+    font-family: Trebuchet MS, Helvetica, sans-serif;
+    font-weight: 500;
+}
+
+@keyframes newReleasePageAni {
+    50% {color: #07ce17 ;}
+    0% {
+      object-position: 0% 0%;
+    }
+    25% {
+      object-position: 20% 0%;
+    }
+    100% {
+      object-position: 100% 100%;
+    }
+}
+
+.newReleaseCard2, .todayDealsPageCard2{
+    width: 100%;
+    margin:30px auto;
+    text-align: center;
+}
+
+.newReleaseCard2Image, .todaysDealsPageCard2Image{
+    height: 225px;
+    opacity: 80%;
+}
+
+.newReleaseCard2Content, .todaysDealPageCard2Content{
+    color: black !important;
+    font-weight: 600;
+    font-family: Trebuchet MS, Helvetica, sans-serif !important; 
+}
+
+.newReleaseCard2Text{
+    color: #ff0062;
+    animation: newReleaseCard2Ani 3s infinite;
+    font-family: Trebuchet MS, Helvetica, sans-serif;
+    font-size: xx-large;
+    font-weight: 800;
+}
+
+@keyframes newReleaseCard2Ani {
+    50% {color: #161514;}
+    0% {
+      object-position: 0% 0%;
+    }
+    25% {
+      object-position: 20% 0%;
+    }
+    100% {
+      object-position: 100% 100%;
+    }
+}
+
+.patterns {
+    height: 50vh;
+}
+
+svg text {
+    font-family: Lora !important;
+    letter-spacing: 10px;
+    stroke: #4c7bb1;
+    font-size: 100px;
+    font-weight: 100;
+    stroke-width: 3;
+    animation: textAnimate 5s infinite alternate;
+}
+
+@keyframes textAnimate {
+    0% {
+        stroke-dasharray: 0 50%;
+        stroke-dashoffset:  20%;
+        fill:hsl(189, 68%, 75%)
+
+    }
+    100% {
+        stroke-dasharray: 50% 0;
+        stroke-dashoffstet: -20%;
+        fill: hsla(189, 68%, 75%,0%)
+    }
+}
+
+.allBooksPageCarousel{
+    background-color: #2e4057;
+    margin:0;
+    height: 350px;
+}
+
+.popularPageCarousel {
+    display: inline-block;
+    width: 100%;
+    padding:20px;
+}
+.popularPageCarouselImage{
+    width: 100%;
+    height: 400px;
+}
+
+
+

@@ -10,6 +10,8 @@ import ProductDetailspage from './Components/Body/description.js';
 import NewRelease from './Components/Search_sort/newrelease.js';
 import Headersearch from './Components/Search_sort/headersearch.js';
 import Login from "../src/Components/Body/login"
+import SearchPage from './Components/searchbar';
+
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
                 <Route path="/newrelease" component={NewRelease}></Route>
                 <Route path="/headersearchresults/:searchelement" component={Headersearch}></Route>
                 <Route path="/login" component={Login}></Route>
+                <Route path="/slidebar" component={SearchPage}></Route>
                 
               </Switch>        
         <Footer/>
