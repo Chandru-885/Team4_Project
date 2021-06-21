@@ -9,21 +9,28 @@ import {Link} from "react-router-dom";
 import './search.css';
 import '../Body/design.css';
 
-export default class AllBooksPage extends Component {
+import * as actions from '../action/action'
+// import React, { useEffect } from 'react'
+import {connect} from 'react-redux';
 
-    constructor(){
-        super();
-        this.state = {allbooks : [], prev:false, next:true, showprev:true, shownext:true, current:1,paginate:[]}
+class AllBooksPage extends Component {
+    constructor(props){
+        super(props);
+        this.state = {allbooks :[] , prev:false, next:true, showprev:true, shownext:true, current:1,paginate:[]}
     }
 
-    componentDidMount(){
-        fetch('http://localhost:4000'+'/books',{
-            headers:{'content-type': 'application/json'},
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            this.setState({allbooks : data.data, paginate : data.pagination})
-        });
+//     componentDidMount(){
+//         fetch('http://localhost:4000'+'/books',{
+//             headers:{'content-type': 'application/json'},
+//         })
+//         .then(res=>res.json())
+//         .then(data=>{
+//             this.setState({allbooks : data.data, paginate : data.pagination})
+//         });
+//    }
+
+   componentDidMount(){
+      this.props.onFetchAllbooks();
    }
 
     changenext(){
@@ -70,7 +77,7 @@ export default class AllBooksPage extends Component {
         console.log("alldeals",this.state.allbooks)
         console.log("pagination",this.state.paginate)
     
-        var allbookslist = this.state.allbooks.map((books, i)=>{
+        var allbookslist = this.props.Books.map((books, i)=>{
             return(
                 <div className="col-4 col-sm-4 col-md-3 col-lg-3" key={i} style={{maxWidth:"280px"}}>
                     
@@ -199,6 +206,24 @@ export default class AllBooksPage extends Component {
         )
     }
 }
+
+
+const mapStateToProps = (state) => {
+    console.log('Inside Component ', state);
+    return {
+        Books: state.BookReducer.books
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        onFetchAllbooks: ()=>dispatch(actions.fetchbooksbymixedcollections()),
+    }
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(AllBooksPage);
+
+
 
 // fetchnextorprevpage(CurrentPage){
 //     fetch(`http://localhost:4000/books?page=${CurrentPage}&limit=12`,{

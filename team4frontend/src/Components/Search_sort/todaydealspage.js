@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+// import React, { Component } from 'react'
 import {Button,Card,Row,Container} from 'react-bootstrap' 
 import fiction2  from "../images/fiction2.JPG"
 import SearchPage from '../searchbar';
@@ -9,34 +9,42 @@ import {Link} from "react-router-dom";
 import './search.css';
 import '../Body/design.css';
 
-export default class TodayDealsPage extends Component {
+import * as actions from '../action/action'
+import React, { useEffect } from 'react'
+import {connect} from 'react-redux';
 
-    constructor(){
-        super();
-        this.state = {todaydealslist : []}
-    }
+// export default class TodayDealsPage extends Component {
 
-
-    componentDidMount(){
-        fetch('http://localhost:4000'+'/books/?sort=-discount',{
-            headers:{'content-type': 'application/json'},
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            this.setState({todaydealslist : data.data})
-        });
-        console.log("alldeals",this.state.todaydealslist)
-    }
-
-    decidenow(){
-        console.log("decide function")
-        alert("Please Login!")
-        this.props.history.push('/login')
-    }
+//     constructor(){
+//         super();
+//         this.state = {todaydealslist : []}
+//     }
 
 
-    render() {
-        var DealsBooklist = this.state.todaydealslist.map((books, i)=>{
+//     componentDidMount(){
+//         fetch('http://localhost:4000'+'/books/?sort=-discount',{
+//             headers:{'content-type': 'application/json'},
+//         })
+//         .then(res=>res.json())
+//         .then(data=>{
+//             this.setState({todaydealslist : data.data})
+//         });
+//         console.log("alldeals",this.state.todaydealslist)
+//     }
+
+    function TodayDealsPage(props){
+        useEffect(() => {
+            props.onFetchNewtodaydeals();
+        }, []);
+
+    // decidenow(){
+    //     console.log("decide function")
+    //     alert("Please Login!")
+    //     this.props.history.push('/login')
+    // }
+
+
+        var DealsBooklist = props.Books.map((books, i)=>{
            // if(i < 4){
             return(
                 <div className="col-4 col-sm-4 col-md-3 col-lg-3" key={i} style={{maxWidth:"280px"}}>
@@ -58,11 +66,13 @@ export default class TodayDealsPage extends Component {
                             <Card.Text as="div">
                                 <strong style={{ textDecorationLine: 'line-through' }}>Rs. {books.price}</strong>
                                 <strong style={{marginLeft:"7px",color:"red"}}>Rs. {books.sellprice}</strong>
-                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}>
+                                {/* <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}> */}
+                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}}>
                                     {/* <Link to="/login"><i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i></Link> */}
                                     <i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i>
                                 </button>
-                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}>
+                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}}>
+                                {/* <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}> */}
                                     {/*<Link to="/login"><i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i></Link>*/}
                                     <i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i>
                                 </button>  
@@ -151,4 +161,18 @@ export default class TodayDealsPage extends Component {
             </>
         )
     }
-}
+
+    const mapStateToProps = (state) => {
+        console.log('Inside Component ', state);
+        return {
+            Books: state.BookReducer.books
+        }
+      }
+      
+      const mapDispatchToProps = (dispatch) => {
+        return {
+            onFetchNewtodaydeals: ()=>dispatch(actions.fetchbooksbytodaydeals()),
+        }
+      }
+      
+      export default connect(mapStateToProps, mapDispatchToProps)(TodayDealsPage);

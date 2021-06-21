@@ -190,7 +190,6 @@ export default class AllBooksPage extends Component {
                   <Container>
                     <div className="row">
                       <PopularBookPage/>
-                      
                     </div>
                   </Container>
                 </div>

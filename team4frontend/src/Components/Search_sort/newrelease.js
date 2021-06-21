@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
 import {Card,Container} from 'react-bootstrap' ;
 import fiction2  from "../images/nonfic3.JPG";
 import SearchPage from '../searchbar';
@@ -9,36 +9,43 @@ import {Link} from "react-router-dom";
 import './search.css';
 import '../Body/design.css';
 
-export default class NewReleasePage extends Component {
+import * as actions from '../action/action'
+import React, { useEffect } from 'react'
+import {connect} from 'react-redux';
+// export default class NewReleasePage extends Component {
 
-    constructor(){
-        super();
-        this.state = {newrelease : []}
-    }
+//     constructor(){
+//         super();
+//         this.state = {newrelease : []}
+//     }
 
 
-    componentDidMount(){
-        fetch('http://localhost:4000'+'/books/?sort=-date',{
-            headers:{'content-type': 'application/json'},
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            this.setState({newrelease : data.data})
-        });
-        console.log("alldeals",this.state.newrelease)
-    }
 
-    decidenow(){
-        console.log("decide function")
-        alert("Please Login!")
-        this.props.history.push('/login')
-    }
+    // componentDidMount(){
+        // fetch('http://localhost:4000'+'/books/?sort=-date',{
+        //     headers:{'content-type': 'application/json'},
+        // })
+        // .then(res=>res.json())
+        // .then(data=>{
+        //     this.setState({newrelease : data.data})
+        // });
+        // console.log("alldeals",this.state.newrelease)
+    // }
 
-    render() {
-        var newreleaselist = this.state.newrelease.map((books, i)=>{
-            //if(i < 4){
+    function NewReleasePage(props){
+
+    useEffect(() => {
+        props.onFetchNewReleaseBooks();
+    }, []);
+
+    // decidenow(){
+    //     console.log("decide function")
+    //     alert("Please Login!")
+    //     this.props.history.push('/login')
+    // }
+
+        var newreleaselist = props.Books.map((books, i)=>{
             return(
-
                 <div className="col-4 col-sm-4 col-md-3 col-lg-3" key={i} style={{maxWidth:"280px"}}>
                     
                     <Card className="card-top border-0 mb-4 card shadow rounded Cardshover">
@@ -58,11 +65,13 @@ export default class NewReleasePage extends Component {
                             <Card.Text as="div">
                                 <strong style={{ textDecorationLine: 'line-through' }}>Rs. {books.price}</strong>
                                 <strong style={{marginLeft:"7px",color:"red"}}>Rs. {books.sellprice}</strong>
-                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}>
+                                {/* <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}> */}
+                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} >
                                     {/* <Link to="/login"><i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i></Link> */}
                                     <i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i>
                                 </button>
-                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}>
+                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}}>
+                                {/* <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}> */}
                                     {/*<Link to="/login"><i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i></Link>*/}
                                     <i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i>
                                 </button>  
@@ -93,7 +102,6 @@ export default class NewReleasePage extends Component {
                     </Card>
                 </div>
             )
-            //}
         })
         
         return (
@@ -149,4 +157,18 @@ export default class NewReleasePage extends Component {
             </>
         )
     }
-}
+
+const mapStateToProps = (state) => {
+    console.log('Inside Component ', state);
+    return {
+        Books: state.BookReducer.books
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        onFetchNewReleaseBooks: ()=>dispatch(actions.fetchbooksbynewrelease()),
+    }
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(NewReleasePage);

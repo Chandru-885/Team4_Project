@@ -1,35 +1,39 @@
 import React, { Component } from 'react'
-import {Button,Card,Row,Container} from 'react-bootstrap' 
+// import {Button,Card,Row,Container} from 'react-bootstrap' 
 import './searchbar.css';
-import { FaStar } from "react-icons/fa";
+// import { FaStar } from "react-icons/fa";
 import 'bootstrap/dist/css/bootstrap.css';
 
-
+import * as actions from './action/action'
+// import React, { useEffect } from 'react'
+import {connect} from 'react-redux';
 import arrow  from "./images/Arrow.png"
 
-export default class Searchbar extends Component {
+class Searchbar extends Component {
     constructor(props){
         super(props);
-            this.state = {popularbooks:[],query:"",ratingsall:"sort=-ratings",below_500 : "&price[lt]=500",AboveEqual_500:"&price[gte]=500",AboveEqual_1000:"&price[gte]=1000"}
+            this.state = {popularbooks:[],query:"",ratingsall:"sort=-ratings",below_500 : "&price[lt]=500",AboveEqual_500:"&price[gte]=500",AboveEqual_1000:"&price[gte]=1000",
+            dis50andAbove : "&discount[gte]=50", dis30andAbove : "&discount[gte]=30", dis10andAbove : "&discount[gte]=10",
+            
+        }
     }
 
-    price(selectedquery){
-        console.log("selectedquery",selectedquery)
-        var API = `http://localhost:4000/books/?${this.state.ratingsall}${selectedquery}`
-        console.log("API",API)
-        fetch(API,{
-            headers:{'content-type': 'application/json'},
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            this.setState({popularbooks : data.data})
-            console.log("popularbooks",this.state.popularbooks)
-        });
-    }
+    // price(selectedquery){
+    //     console.log("selectedquery",selectedquery)
+    //     var API = `http://localhost:4000/books/?${this.state.ratingsall}${selectedquery}`
+    //     console.log("API",API)
+    //     fetch(API,{
+    //         headers:{'content-type': 'application/json'},
+    //     })
+    //     .then(res=>res.json())
+    //     .then(data=>{
+    //         this.setState({popularbooks : data.data})
+    //     });
+    // }
 
 
     render() {
-    
+        console.log("popularbooks",this.state.popularbooks)
         return (
             
             <div className="pt-2" >
@@ -56,9 +60,14 @@ export default class Searchbar extends Component {
                                 
                                 <ul>
                                     {/* <li>All</li> */}
-                                    <li onClick={this.price.bind(this,this.state.below_500)}>Below 500</li>
-                                    <li onClick={this.price.bind(this,this.state.AboveEqual_500)}>500 and Above</li>
-                                    <li onClick={this.price.bind(this,this.state.AboveEqual_1000)}>1000 and Above</li>
+                                    {/* <li onClick={this.price.bind(this,this.state.below_500)}>Below 500</li> */}
+                                    {/* <li onClick={this.price.bind(this,this.state.AboveEqual_500)}>500 and Above</li>
+                                    <li onClick={this.price.bind(this,this.state.AboveEqual_1000)}>1000 and Above</li> */}
+                                    <li onClick={this.props.onFetchPricebelow500()}>Below 500</li>
+                                    {/* <li onClick={this.props.onFetchPricebelow500()}>Below 500</li> */}
+                                    {/* <li onClick={this.props.onFetchPricebelow500()}>Below 500</li> */}
+
+                                 
                                 </ul>
                             </div>
                             <div class="item">
@@ -67,11 +76,9 @@ export default class Searchbar extends Component {
                                 
                                 <ul>
                                     {/* <li>All</li> */}
-                                    <li>50% Discount</li>
-                                    <li>40% Discount</li>
-                                    <li>30% Discount</li>
-                                    <li>20% Discount</li>
-                                    <li>10% Discount</li>
+                                    <li>50% and Above</li>
+                                    <li>30% and Above</li>
+                                    <li>10% and Above</li>
                                 </ul>
                             </div>
                             <div class="item">
@@ -115,3 +122,18 @@ export default class Searchbar extends Component {
         )
     }
 }
+
+// const mapStateToProps = (state) => {
+//     console.log('Inside Component ', state);
+//     return {
+//         Books: state.BookReducer.books
+//     }
+//   }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        onFetchPricebelow500 : () => dispatch(actions.fetchbooksbypricebelow500()),
+    }
+  }
+  
+  export default connect(null, mapDispatchToProps)(Searchbar);

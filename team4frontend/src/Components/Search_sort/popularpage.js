@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+// import React, { Component } from 'react'
 import {Card,Carousel} from 'react-bootstrap' 
 import fiction2  from "../images/fiction1.JPG"
 import {Link} from "react-router-dom";
@@ -9,82 +9,49 @@ import { FaStar } from "react-icons/fa";
 import './search.css';
 import '../Body/design.css';
 
-export default class PopularPage extends Component {
+import * as actions from '../action/action'
+import React, { useEffect } from 'react'
+import {connect} from 'react-redux';
 
-    constructor(){
-        super();
-        this.state = {popularbooks : []}
-    }
+// export default class PopularPage extends Component {
 
-    componentDidMount(){
-        fetch('http://localhost:4000'+'/books/?sort=-ratings',{
-            headers:{'content-type': 'application/json'},
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            this.setState({popularbooks : data.data})
-        });
-        console.log("alldeals",this.state.popularbooks)
-    }
+//     constructor(){
+//         super();
+//         this.state = {popularbooks : []}
+//     }
 
-   nextpage(){
-    this.props.history.push('/description')
-   }
+//     componentDidMount(){
+//         fetch('http://localhost:4000'+'/books/?sort=-ratings',{
+//             headers:{'content-type': 'application/json'},
+//         })
+//         .then(res=>res.json())
+//         .then(data=>{
+//             this.setState({popularbooks : data.data})
+//         });
+//         console.log("alldeals",this.state.popularbooks)
+//     }
 
-   all(){
-        fetch('http://localhost:4000'+'/books/?sort=-ratings',{
-            headers:{'content-type': 'application/json'},
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            this.setState({popularbooks : data.data})
-        });
-        console.log("alldeals",this.state.popularbooks)
-   }
+function PopularPage(props){
 
-   below500(){
-    fetch('http://localhost:4000'+'/books/?sort=-ratings&price[lt]=500',{
-        headers:{'content-type': 'application/json'},
-    })
-    .then(res=>res.json())
-    .then(data=>{
-        this.setState({popularbooks : data.data})
-    });
-    console.log("below500",this.state.popularbooks)
-   }
-
-   AboveEqual500(){
-    fetch('http://localhost:4000'+'/books/?sort=-ratings&price[gte]=500',{
-        headers:{'content-type': 'application/json'},
-    })
-    .then(res=>res.json())
-    .then(data=>{
-        this.setState({popularbooks : data.data})
-    });
-    console.log("AboveEqual500",this.state.popularbooks)
-   }
-
-   AboveEqual1000(){
-    fetch('http://localhost:4000'+'/books/?sort=-ratings&price[gte]=1000',{
-        headers:{'content-type': 'application/json'},
-    })
-    .then(res=>res.json())
-    .then(data=>{
-        this.setState({popularbooks : data.data})
-    });
-    console.log("AboveEqual500",this.state.popularbooks)
-   }
-    
-   decidenow(){
-        console.log("decide function")
-        alert("Please Login!")
-        this.props.history.push('/login')
-    }
+    useEffect(() => {
+        props.onFetchPopularBooks();
+    }, []);
 
 
 
-    render() {
-        var popularbookslist = this.state.popularbooks.map((books, i)=>{
+//    nextpage(){
+//     this.props.history.push('/description')
+//    }
+
+//    decidenow(){
+//         console.log("decide function")
+//         alert("Please Login!")
+//         this.props.history.push('/login')
+//     }
+
+
+
+        var popularbookslist = props.Books.map((books, i)=>{
             // if(i < 4){
             return(
                 <div className="col-4 col-sm-4 col-md-3 col-lg-3" key={i} style={{maxWidth:"280px"}}> 
@@ -107,11 +74,14 @@ export default class PopularPage extends Component {
                             <Card.Text as="div">
                                 <strong style={{ textDecorationLine: 'line-through' }}>Rs. {books.price}</strong>
                                 <strong style={{marginLeft:"7px",color:"red"}}>Rs. {books.sellprice}</strong>
-                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}>
+                                {/* <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}> */}
+                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}}>
+
                                     {/* <Link to="/login"><i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i></Link> */}
                                     <i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i>
                                 </button>
-                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}>
+                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}}>
+                                {/* <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}> */}
                                     {/*<Link to="/login"><i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i></Link>*/}
                                     <i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i>
                                 </button>  
@@ -222,4 +192,69 @@ export default class PopularPage extends Component {
             </>
         )
     }
-}
+    const mapStateToProps = (state) => {
+        console.log('Inside Component ', state);
+        return {
+            Books: state.BookReducer.books
+        }
+      }
+      
+      const mapDispatchToProps = (dispatch) => {
+        return {
+            onFetchPopularBooks : ()=>dispatch(actions.fetchbooksbypopularbooks()),
+        }
+      }
+      
+      export default connect(mapStateToProps, mapDispatchToProps)(PopularPage);
+   
+
+
+
+
+
+
+
+
+// all(){
+//     fetch('http://localhost:4000'+'/books/?sort=-ratings',{
+//         headers:{'content-type': 'application/json'},
+//     })
+//     .then(res=>res.json())
+//     .then(data=>{
+//         this.setState({popularbooks : data.data})
+//     });
+//     console.log("alldeals",this.state.popularbooks)
+// }
+
+// below500(){
+// fetch('http://localhost:4000'+'/books/?sort=-ratings&price[lt]=500',{
+//     headers:{'content-type': 'application/json'},
+// })
+// .then(res=>res.json())
+// .then(data=>{
+//     this.setState({popularbooks : data.data})
+// });
+// console.log("below500",this.state.popularbooks)
+// }
+
+// AboveEqual500(){
+// fetch('http://localhost:4000'+'/books/?sort=-ratings&price[gte]=500',{
+//     headers:{'content-type': 'application/json'},
+// })
+// .then(res=>res.json())
+// .then(data=>{
+//     this.setState({popularbooks : data.data})
+// });
+// console.log("AboveEqual500",this.state.popularbooks)
+// }
+
+// AboveEqual1000(){
+// fetch('http://localhost:4000'+'/books/?sort=-ratings&price[gte]=1000',{
+//     headers:{'content-type': 'application/json'},
+// })
+// .then(res=>res.json())
+// .then(data=>{
+//     this.setState({popularbooks : data.data})
+// });
+// console.log("AboveEqual500",this.state.popularbooks)
+// }
