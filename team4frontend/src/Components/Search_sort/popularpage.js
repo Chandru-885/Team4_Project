@@ -201,7 +201,8 @@ function PopularPage(props){
       
       const mapDispatchToProps = (dispatch) => {
         return {
-            onFetchPopularBooks : ()=>dispatch(actions.fetchbooksbypopularbooks()),
+            // onFetchPopularBooks : ()=>dispatch(actions.fetchbooksbypopularbooks()),
+            onFetchPopularBooks : ()=>dispatch(actions.fetchbooksbyquery()),
         }
       }
       

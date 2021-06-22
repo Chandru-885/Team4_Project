@@ -36,8 +36,8 @@
 
 li {
     list-style-type: circle;
-    margin-left: 35px;
-    padding: 4px;
+    margin-left: 15px;
+    padding-bottom: 4px;
     cursor: pointer;
 }
 

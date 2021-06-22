@@ -171,7 +171,8 @@ import {connect} from 'react-redux';
       
       const mapDispatchToProps = (dispatch) => {
         return {
-            onFetchNewtodaydeals: ()=>dispatch(actions.fetchbooksbytodaydeals()),
+            // onFetchNewtodaydeals: ()=>dispatch(actions.fetchbooksbytodaydeals()),
+            onFetchNewtodaydeals: ()=>dispatch(actions.fetchbooksbyquery()),
         }
       }
       

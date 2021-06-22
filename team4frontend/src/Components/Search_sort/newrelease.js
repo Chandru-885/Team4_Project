@@ -167,7 +167,8 @@ const mapStateToProps = (state) => {
   
   const mapDispatchToProps = (dispatch) => {
     return {
-        onFetchNewReleaseBooks: ()=>dispatch(actions.fetchbooksbynewrelease()),
+        // onFetchNewReleaseBooks: ()=>dispatch(actions.fetchbooksbynewrelease()),
+        onFetchNewReleaseBooks: ()=>dispatch(actions.fetchbooksbyquery()),
     }
   }
   

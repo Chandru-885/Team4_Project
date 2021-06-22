@@ -217,7 +217,8 @@ const mapStateToProps = (state) => {
   
   const mapDispatchToProps = (dispatch) => {
     return {
-        onFetchAllbooks: ()=>dispatch(actions.fetchbooksbymixedcollections()),
+        // onFetchAllbooks: ()=>dispatch(actions.fetchbooksbymixedcollections()),
+        onFetchAllbooks: ()=>dispatch(actions.fetchbooksbyquery()),
     }
   }
   
