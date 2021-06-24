@@ -17,14 +17,15 @@ export default class ProductDetailspage extends Component {
     console.log("props bookdetail",this.state.bookdetails)
     return (
       <div style={{color:"black"}}>
-        <div className="container my-5" >
+        <div className="container mb-0" >
           <div className="row" >
 
-            <div className="col-md-2 "> 
+            <div className="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2"> 
               <img className="card shadow rounded" src={fiction2} className="img-fluid" alt="product image"/>
             </div> 
 
-            <div className="col-md-7">
+            {/* <div className="col-md-7"> */}
+            <div className="col-12 col-sm-10 col-md-6 col-lg-6 col-xl-7"> 
               <div>
                 <strong style={{fontSize:"18px"}}>{this.state.bookdetails.title}</strong>
                 <br></br>
@@ -65,23 +66,24 @@ export default class ProductDetailspage extends Component {
                 <strong style={{fontSize:"15px"}}>Sold by:<a href="#"> abc Seller</a></strong>
               </div>
               <br></br>
+
               <div className="row">
-                <div className="col-md-3">
+                <div className="col-3 col-md-3">
                   <img src={fiction2} width="35" height="35" className="rounded" alt="" />
                   <br></br>
                   <a href="#">No contact delivery</a>
                 </div>
-                <div className="col-md-3">
+                <div className="col-3 col-md-3">
                   <img src={fiction2} width="35" height="35" className="rounded" alt="" />
                   <br></br>
                   <a href="#">7 Day Replacement</a>
                 </div>
-                <div className="col-md-3">
+                <div className="col-3 col-md-3">
                   <img src={fiction2} width="35" height="35" className="rounded" alt="" />
                   <br></br>
                   <a href="#">Amazon Delivered</a>
                 </div>
-                <div className="col-md-3">
+                <div className="col-3 col-md-3">
                   <img src={fiction2} width="35" height="35" className="rounded" alt="" />
                   <br></br>
                   <a href="#">1 Year Waranty</a>
@@ -89,11 +91,12 @@ export default class ProductDetailspage extends Component {
               </div>
             </div>
                                       {/*card starts*/}
-            <div className="card shadow rounded" style={{ width: '300px',marginLeft:"20px"}} >
+            <div className="col-12 col-sm-8 col-md-4 col-lg-4 col-xl-3 mt-2"> 
+            <div className="card shadow rounded"  >
               <div className="card-body">
                 <div className="form-group">
-                  <strong style={{fontSize:"18px"}}><span>Price - </span>Rs. {this.state.bookdetails.sellprice}/-</strong>
-                  <strong style={{marginLeft:"15px",textDecorationLine: 'line-through'}}>Rs. {this.state.bookdetails.price}</strong>
+                  <strong style={{fontSize:"16px"}}><span>Price - </span>Rs. {this.state.bookdetails.sellprice}/-</strong>
+                  <strong style={{marginLeft:"5px",textDecorationLine: 'line-through'}}>Rs. {this.state.bookdetails.price}</strong>
                   <br></br>
                   <strong>
                     <span>M.R.P:</span>
@@ -145,8 +148,10 @@ export default class ProductDetailspage extends Component {
                     Select Delivery Location
                 </a>
               </div>
-            </div>       
+            </div>  
+            </div>
           </div>
+
           <br></br><br></br>
                             {/*card ends*/}
 
@@ -181,7 +186,8 @@ export default class ProductDetailspage extends Component {
 
         </div>
           
-        <div className="col-md-8" style={{marginLeft:"60px"}}>
+        {/* <div className="col-md-8" style={{marginLeft:"60px"}}> */}
+        <div className="col-md-8">
           <p className="text-capitalize font-weight-bold">Top reviews from India</p>
           <div className="row" >
             <div className="col-md-12">

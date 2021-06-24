@@ -6,25 +6,22 @@ import { FaHeart } from "react-icons/fa"
 import { FaStar } from "react-icons/fa"
 import {Link} from "react-router-dom";
 import './design.css';
+import '../Search_sort/search.css'
 
+import * as actions from '../action/action'
+// import React, { useEffect } from 'react'
+import {connect} from 'react-redux';
 
-export default class NewRelease extends Component {
+class NewRelease extends Component {
 
-    constructor(){
-        super();
-        this.state = {newrelease : []}
+    constructor(props){
+        super(props);
+        this.state = {newrelease : [], newreleasequery:"?sort=-date"}
     }
 
 
     componentDidMount(){
-        fetch('http://localhost:4000'+'/books/?sort=-date',{
-            headers:{'content-type': 'application/json'},
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            this.setState({newrelease : data.data})
-        });
-        console.log("alldeals",this.state.newrelease)
+        this.props.onFetchNewReleaseBooks(this.state.newreleasequery);
     }
 
     decidenow(){
@@ -34,52 +31,51 @@ export default class NewRelease extends Component {
     }
 
     render() {
-        var newreleaselist = this.state.newrelease.map((books, i)=>{
-            if(i < 4){
+        var newreleaselist = this.props.Books.map((books, i)=>{
+            if(i < 6){
             return(
 
-                <div className="col-4 col-sm-4 col-md-3 col-lg-3" key={i} style={{maxWidth:"280px"}}>
+                <div className="col-4 col-sm-4 col-md-3 col-lg-2 col-xl-2 cardmarign" key={i}>
                     
                     <Card className="card-top border-0 mb-4 card shadow rounded Cardshover">
+                        
                         <Link to= {{pathname : '/description', query : books}}>
-                            <Card.Img className="card-header bg-white " src={fiction2} variant="top" />
+                            <Card.Img className="card-header leftpaddingcard bg-white" src={fiction2} variant="top" />
                         </Link>
                         
-                        <Card.Body className="card-body text-dark" >
-                            <a style={{ textDecoration: "none" }} href={""}>
-                                <Card.Title as="div" className="text-dark">
+                        <Card.Body className="card-body change-font text-dark" >
+                            <Card.Text as="div" className="cardtext">
+
+                                <div className="text-dark">
                                     <strong >{books.title}</strong>
                                     <br></br>
                                     <strong style={{fontWeight:"normal"}}>{books.author}</strong>
-                                </Card.Title>
-                            </a>
-                           
-                            <Card.Text as="div">
+                                </div>
+                                   
                                 <strong style={{ textDecorationLine: 'line-through' }}>Rs. {books.price}</strong>
                                 <strong style={{marginLeft:"7px",color:"red"}}>Rs. {books.sellprice}</strong>
-                                
-                                <br></br>   
-                            </Card.Text>
-                           
-                            {/*<Card.Text as="div">
-                                <Rating value={books.ratings} text={`reviews`} />
-                            </Card.Text>*/}
-                            
-                            <Card.Text as="div">
-                                <strong style={{float:"left"}} variant="link">
+
+                                <div>
+                                    <strong style={{float:"left"}} variant="link">
                                         <i className="text-warning"><FaStar/></i>
                                         <i className="text-warning"><FaStar/></i>
                                         <i className="text-warning"><FaStar/></i>
                                         <i className="text-warning"><FaStar/></i>
                                         <i className="text-warning"><FaStar/></i>
                                     </strong>
-                                <strong style={{marginLeft:"10px"}}>({books.discount}%)</strong>
+                                    <strong style={{marginLeft:"10px"}}>({books.discount}%)</strong>
+                                </div>
+
+                                <div className="aligncartwishlist">
+                                    <button class="btn btn-light border-0 cartbutton"  onClick={this.decidenow.bind(this)}>
+                                        <i className="text-primary "><FaCartPlus/></i>
+                                    </button>
+                                    <button class="btn btn-light border-0 wishlistbutton"   onClick={this.decidenow.bind(this)}>
+                                        <i className="text-danger "><FaHeart/></i>
+                                    </button> 
+                                </div>                               
+
                             </Card.Text>
-
-
-                            {/* <Card.Text as="div" className="card-text">
-                                {product.description}
-                            </Card.Text> */}
                         </Card.Body>
                     </Card>
                 </div>
@@ -94,3 +90,26 @@ export default class NewRelease extends Component {
         )
     }
 }
+const mapStateToProps = (state) => {
+    console.log('Inside Component ', state);
+    return {
+        Books: state.BookReducer.books
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        onFetchNewReleaseBooks: (condition_popular)=>dispatch(actions.fetchbooksbyquery(condition_popular)),
+    }
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(NewRelease);
+
+// fetch('http://localhost:4000'+'/books/?sort=-date',{
+//     headers:{'content-type': 'application/json'},
+// })
+// .then(res=>res.json())
+// .then(data=>{
+//     this.setState({newrelease : data.data})
+// });
+// console.log("alldeals",this.state.newrelease)

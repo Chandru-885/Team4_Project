@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Carousel,Card,Container} from 'react-bootstrap' 
+import {Carousel,Card,Container, Row, Col} from 'react-bootstrap' 
 import nonfic2  from "../images/nonfic2.JPG"
 import { FaCartPlus } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa"
@@ -11,22 +11,18 @@ import {Link} from "react-router-dom";
 import './design.css';
 import '../Search_sort/search.css';
 
-export default class AllBooksPage extends Component {
+import * as actions from '../action/action'
+// import React, { useEffect } from 'react'
+import {connect} from 'react-redux';
+class AllBooksPage extends Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {allbooks : []}
     }
 
     componentDidMount(){
-        fetch('http://localhost:4000'+'/books',{
-            headers:{'content-type': 'application/json'},
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            this.setState({allbooks : data.data})
-        });
-        console.log("alldeals",this.state.allbooks)
+       this.props.onFetchBooklistBooks();
    }
 
    decidenow(){
@@ -36,59 +32,50 @@ export default class AllBooksPage extends Component {
     }
 
     render() {
-        var allbookslist = this.state.allbooks.map((books, i)=>{
+        var allbookslist = this.props.Books.map((books, i)=>{
             // if(i < 4){
             return(
-                <div className="col-4 col-sm-4 col-md-3 col-lg-3" key={i} style={{maxWidth:"280px"}}>
+                <div className="col-4 col-sm-4 col-md-3 col-lg-2 col-xl-2 cardmarign" key={i}>
                     
                     <Card className="card-top border-0 mb-4 card shadow rounded Cardshover">
+                        
                         <Link to= {{pathname : '/description', query : books}}>
-                            <Card.Img className="card-header bg-white " src={nonfic2} variant="top" />
+                            <Card.Img className="card-header  leftpaddingcard bg-white" src={nonfic2} variant="top" />
                         </Link>
                         
-                        <Card.Body className="card-body text-dark" >
-                            <a style={{ textDecoration: "none" }} href={""}>
-                                <Card.Title as="div" className="text-dark">
+                        <Card.Body className="card-body change-font text-dark" >
+                            <Card.Text as="div" className="cardtext">
+
+                                <div className="text-dark">
                                     <strong >{books.title}</strong>
                                     <br></br>
                                     <strong style={{fontWeight:"normal"}}>{books.author}</strong>
-                                </Card.Title>
-                            </a>
-                           
-                            <Card.Text as="div">
+                                </div>
+                                   
                                 <strong style={{ textDecorationLine: 'line-through' }}>Rs. {books.price}</strong>
                                 <strong style={{marginLeft:"7px",color:"red"}}>Rs. {books.sellprice}</strong>
-                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}>
-                                    {/* <Link to="/login"><i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i></Link> */}
-                                    <i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i>
-                                </button>
-                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}>
-                                    {/*<Link to="/login"><i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i></Link>*/}
-                                    <i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i>
-                                </button>   
-                                
-                                <br></br>   
-                            </Card.Text>
-                           
-                            {/*<Card.Text as="div">
-                                <Rating value={books.ratings} text={`reviews`} />
-                            </Card.Text>*/}
-                            
-                            <Card.Text as="div">
-                                <strong style={{float:"left"}} variant="link">
+
+                                <div>
+                                    <strong style={{float:"left"}} variant="link">
                                         <i className="text-warning"><FaStar/></i>
                                         <i className="text-warning"><FaStar/></i>
                                         <i className="text-warning"><FaStar/></i>
                                         <i className="text-warning"><FaStar/></i>
                                         <i className="text-warning"><FaStar/></i>
                                     </strong>
-                                <strong style={{marginLeft:"10px"}}>({books.discount}%)</strong>
+                                    <strong style={{marginLeft:"10px"}}>({books.discount}%)</strong>
+                                </div>
+
+                                <div className="aligncartwishlist">
+                                    <button class="btn btn-light border-0 cartbutton"  onClick={this.decidenow.bind(this)}>
+                                        <i className="text-primary "><FaCartPlus/></i>
+                                    </button>
+                                    <button class="btn btn-light border-0 wishlistbutton"   onClick={this.decidenow.bind(this)}>
+                                        <i className="text-danger "><FaHeart/></i>
+                                    </button> 
+                                </div>                               
+
                             </Card.Text>
-
-
-                            {/* <Card.Text as="div" className="card-text">
-                                {product.description}
-                            </Card.Text> */}
                         </Card.Body>
                     </Card>
                 </div>
@@ -99,18 +86,18 @@ export default class AllBooksPage extends Component {
         return (
             <>
             <div className="Main">
-                <div style={{
+                {/* <div style={{
                     width:"1100px",
                     margin:"auto"
-                }}>
+                }}> */}
                 <p className="visibility">{"Chandru & co"}</p>
                 <h3>Mixed Collections</h3>
-                    <Container>
+                    {/* <Container> */}
                         <div className="row">
                             {allbookslist} 
                         </div>
-                    </Container>
-                </div>
+                    {/* </Container> */}
+                {/* </div> */}
 
                 <div className="todayDealsPageCarousel">
                     <Carousel fade>
@@ -122,7 +109,7 @@ export default class AllBooksPage extends Component {
                             />
                             <Carousel.Caption>
                                 <div className="todayDealsPageCarouselContent">
-                                <h1><b>Find Your Deals and Order Here now!!!</b></h1></div>
+                                <h1><b className="todayDealsPageCarouselText">Find Your Deals and Order Here now!!!</b></h1></div>
                             </Carousel.Caption>
                         </Carousel.Item>
 
@@ -134,7 +121,7 @@ export default class AllBooksPage extends Component {
                             />
                             <Carousel.Caption>
                                 <div className="todayDealsPageCarouselContent">
-                                <h1><b>Discover Your Favourite Book Quick!!!</b></h1></div>
+                                <h1><b className="todayDealsPageCarouselText">Discover Your Favourite Book Quick!!!</b></h1></div>
                             </Carousel.Caption>
                         </Carousel.Item>
 
@@ -146,56 +133,89 @@ export default class AllBooksPage extends Component {
                             />
                             <Carousel.Caption>
                                 <div className="todayDealsPageCarouselContent">
-                                <h1><b>Order Now and Gift Your Loved one!!!</b></h1></div>
+                                <h1><b className="todayDealsPageCarouselText">Order Now and Gift Your Loved one!!!</b></h1></div>
                             </Carousel.Caption>
                         </Carousel.Item>
                     </Carousel>
                 </div>
 
 
-                <div style={{ width:"1100px", margin:"auto"}}>
-                  <h3>Today Deals</h3>
-                  <Container>
+                <h3>Today Deals</h3>
                     <div className="row">
                       <TodayDealsPage/>
                     </div>
-                  </Container>
-                </div>
 
-                <div style={{ width:"1100px", margin:"auto"}}>
-                  <h3>New Releases</h3>
-                  <Container>
+                <h3>New Releases</h3>
                     <div className="row">
                       <NewRelease/>
                     </div>
-                  </Container>
-                </div>
 
-                <div className="booklistCard2">
+                    <Card className="booklistCard2">
+                        <Row>
+                            <Col md ={4}>
+                                <Card.Img className="booklistCard2Image" variant="top" src='https://static.storyhouse.com/cms/wp-content/uploads/2020/06/Newsletter-Banner-1200x4002-1-2048x683.png"' />
+                            </Col>
+                            <Col md = {8}>
+                                <Card.Body>
+                                    <Card.Text>
+                                        <h1 className="booklistCard2Heading">The Summer Reading Challenge</h1>
+                                        <h5 className="booklistCard2Text">Kids who read any 7 books can earn a Star Reader Certificate and a free 
+                                        book from National Geographic Kids. Pick up a sign-up sheet at your local Books Store to get started. Limited time offer. Book choice limited to specific
+                                        titles and ages (Grades K-8). Children must have parent’s permission.</h5>
+                                        <h5 className="booklistCard2Heading">Book Store <br/> June 15 - August 15 </h5>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Col>
+                        </Row>
+                    </Card>
+
+                {/* <div className="booklistCard2">
                     <div class="card flex-row flex-wrap booklistCard2Container">
-                        <img className="booklistCard2Image" src="https://static.storyhouse.com/cms/wp-content/uploads/2020/06/Newsletter-Banner-1200x4002-1-2048x683.png" width="500px" height="auto" alt=""/>
+                        <img className="booklistCard2Image" src="https://static.storyhouse.com/cms/wp-content/uploads/2020/06/Newsletter-Banner-1200x4002-1-2048x683.png" alt=""/>
                         <div class="card-block card-content booklistCard2Content">
                             <h1 class="card-title" className="booklistCard2Heading">The Summer Reading Challenge </h1>
+                            <div className="lineHeight">
                             <p class="card-text" ><div><p className="booklistCard2Text">Kids who read any 7 books can earn a Star Reader Certificate and a free </p></div></p>
                             <p class="card-text"><div><p className="booklistCard2Text">book from National Geographic Kids. Pick up a sign-up sheet at your local </p></div></p>
                             <p class="card-text"><div><p className="booklistCard2Text">Books Store to get started. Limited time offer. Book choice limited to specific</p> </div></p>
                             <p class="card-text"><div><p className="booklistCard2Text"> titles and ages (Grades K-8). Children must have parent’s permission.</p></div></p>
-                            <h5 class="card-title">Book Store <br/> June 15 - August 15 </h5>
+                            </div>
+                            <h5 class="card-title booklistCard2Heading">Book Store <br/> June 15 - August 15 </h5>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
-                <div style={{ width:"1100px", margin:"auto"}}>
                   <h3>Popular Books</h3>
-                  <Container>
                     <div className="row">
-                      <PopularBookPage/>
+                        <PopularBookPage/>
                     </div>
-                  </Container>
-                </div>
             </div>
-            
             </>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    console.log('Inside Component ', state);
+    return {
+        Books: state.BookReducer.books
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        onFetchBooklistBooks: ()=>dispatch(actions.fetchbooksbyquery()),
+    }
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(AllBooksPage);
+
+
+//   fetch('http://localhost:4000'+'/books',{
+//     headers:{'content-type': 'application/json'},
+// })
+// .then(res=>res.json())
+// .then(data=>{
+//     this.setState({allbooks : data.data})
+// });
+// console.log("alldeals",this.state.allbooks)

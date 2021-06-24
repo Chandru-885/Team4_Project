@@ -1,4 +1,5 @@
 export const GET_BOOKS_BY_QUERY = "GET_BOOKS_BY_QUERY"
+export const GET_BOOKS_BY_HEADERSEARCHQUERY = "GET_BOOKS_BY_HEADERSEARCHQUERY"
 
 const API = "http://localhost:4000"
 var FETCHQUERY = ""
@@ -18,6 +19,7 @@ var FINDURL = () => {
     }else if(findurl === "todaydealspage"){
         FETCHQUERY = "?sort=-discount"
     }
+
     return FETCHQUERY
 }
 
@@ -38,21 +40,42 @@ export const fetchbooksbyquery = (givencondition) => {
     let condition = CONDITION(givencondition)
     console.log("condition",condition);
 
+    console.log(`${API}/books${query}${condition}`)
+        return dispatch => {
+            return fetch(`${API}/books/${query}${condition}`, {
+                    headers: { 'Content-Type': 'application/json' },
+                })
+                .then(data =>data.json()) 
+                .then(res=>{
+                    dispatch({
+                        type : GET_BOOKS_BY_QUERY,
+                        payload : res.data
+                    })
+                })
+        }
+}
 
+export const fetchheadersearchresults = (searchvalue) => {
+    console.log("searchvalue",searchvalue);
     return dispatch => {
-        return fetch(`${API}/books${query}${condition}`, {
+        return fetch(`${API}/books/CommonSearch/${searchvalue}`, {
                 headers: { 'Content-Type': 'application/json' },
             })
             .then(data =>data.json()) 
             .then(res=>{
+
                 dispatch({
-                    type : GET_BOOKS_BY_QUERY,
-                    payload : res.data
+                    type : GET_BOOKS_BY_HEADERSEARCHQUERY,
+                    payload : res
                 })
             })
     }
 }
 
+
+    // else{
+    //     FETCHQUERY = `/CommonSearch/${findurl}/?1`
+    // }
 
 // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 // export const GET_BOOKS_BY_MIXEDCOLLECTION = "GET_BOOKS_BY_MIXEDCOLLECTION"
@@ -202,3 +225,19 @@ export const fetchbooksbyquery = (givencondition) => {
 //             })
 //     }
 // }
+
+
+// if(query[query.length-1] === 1){
+//     return dispatch => {
+//         return fetch(`${API}/books${query}${condition}`, {
+//                 headers: { 'Content-Type': 'application/json' },
+//             })
+//             .then(data =>data.json()) 
+//             .then(res=>{
+//                 dispatch({
+//                     type : GET_BOOKS_BY_QUERY,
+//                     payload : res
+//                 })
+//             })
+//     }
+// }else{

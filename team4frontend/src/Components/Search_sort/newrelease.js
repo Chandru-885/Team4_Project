@@ -21,20 +21,6 @@ class NewReleasePage extends Component {
     }
 
 
-
-    // componentDidMount(){
-        // fetch('http://localhost:4000'+'/books/?sort=-date',{
-        //     headers:{'content-type': 'application/json'},
-        // })
-        // .then(res=>res.json())
-        // .then(data=>{
-        //     this.setState({newrelease : data.data})
-        // });
-        // console.log("alldeals",this.state.newrelease)
-    // }
-
-    // function NewReleasePage(props){
-
     componentDidMount(){
         this.props.onFetchNewReleaseBooks();
         }
@@ -105,7 +91,7 @@ class NewReleasePage extends Component {
                     <Card.Img className="newReleasePageCardImage" src="https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-men-s-trousers-men-s-full-screen-poster-banner-carousel-image_191096.jpg" alt="Card image"  />
                     <Card.ImgOverlay>
                         <Card.Title className="newReleasePageCardContent"><h1><b>
-                        Non-Fictional Books - Fasinating Worlds of <br></br>Reality, Discover New Things in Every Page!!!</b></h1>
+                          Non-Fictional Books - Fasinating Worlds of <br></br>Reality, Discover New Things in Every Page!!!</b></h1>
                         </Card.Title>
                     </Card.ImgOverlay>
                 </Card>
@@ -135,7 +121,9 @@ class NewReleasePage extends Component {
                     <Card.Img className="newReleaseCard2Image" src="https://images.unsplash.com/photo-1458682625221-3a45f8a844c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&h=500&q=60" alt="Card image" />
                     <Card.ImgOverlay>
                         <Card.Title ><h1><b className="newReleaseCard2Content">Connect and Celebrate</b></h1></Card.Title>
-                        <Card.Text className="newReleaseCard2Text"><h1>
+                        <Card.Text >
+                            <h1 className="newReleaseCard2Content">
+                            {/* newReleaseCard2Text */}
                             A Modern Romance for people who love to read</h1>
                         </Card.Text>
                         <Card.Text><h3 className="newReleaseCard2Content">Find new releases and order now</h3></Card.Text>
@@ -157,9 +145,25 @@ const mapStateToProps = (state) => {
   
   const mapDispatchToProps = (dispatch) => {
     return {
-        // onFetchNewReleaseBooks: ()=>dispatch(actions.fetchbooksbynewrelease()),
         onFetchNewReleaseBooks: ()=>dispatch(actions.fetchbooksbyquery()),
     }
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(NewReleasePage);
+
+
+  
+// onFetchNewReleaseBooks: ()=>dispatch(actions.fetchbooksbynewrelease()),
+
+  // componentDidMount(){
+        // fetch('http://localhost:4000'+'/books/?sort=-date',{
+        //     headers:{'content-type': 'application/json'},
+        // })
+        // .then(res=>res.json())
+        // .then(data=>{
+        //     this.setState({newrelease : data.data})
+        // });
+        // console.log("alldeals",this.state.newrelease)
+    // }
+
+    // function NewReleasePage(props){

@@ -8,6 +8,7 @@ const BookReducer = (state = initialState, action) =>{
     console.log('Action recieved at reducer***  ', action);
     switch(action.type){
         case actions.GET_BOOKS_BY_QUERY : return {...state, books: action.payload } 
+        case actions.GET_BOOKS_BY_HEADERSEARCHQUERY : return {...state, books: action.payload } 
         default : return {...state}
     }
 }

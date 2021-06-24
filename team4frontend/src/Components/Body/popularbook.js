@@ -9,25 +9,30 @@ import { FaCartPlus } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa"
 import { FaStar } from "react-icons/fa";
 import './design.css';
+import * as actions from '../action/action'
+// import React, { useEffect } from 'react'
+import {connect} from 'react-redux';
 
-export default class PopularBookPage extends Component {
+class PopularBookPage extends Component {
 
     constructor(){
         super();
-        this.state = {popularbooks : []}
+        this.state = {popularbooks : [] , popular : "/?sort=-ratings"}
     }
-
 
     componentDidMount(){
-        fetch('http://localhost:4000'+'/books/?sort=-ratings',{
-            headers:{'content-type': 'application/json'},
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            this.setState({popularbooks : data.data})
-        });
-        console.log("alldeals",this.state.popularbooks)
+        this.props.onFetchpopularBooks(this.state.popular);
     }
+    // componentDidMount(){
+    //     fetch('http://localhost:4000'+'/books/?sort=-ratings',{
+    //         headers:{'content-type': 'application/json'},
+    //     })
+    //     .then(res=>res.json())
+    //     .then(data=>{
+    //         this.setState({popularbooks : data.data})
+    //     });
+    //     console.log("alldeals",this.state.popularbooks)
+    // }
 
     decidenow(){
         console.log("decide function")
@@ -37,60 +42,50 @@ export default class PopularBookPage extends Component {
 
 
     render() {
-        var popularbookslist = this.state.popularbooks.map((books, i)=>{
-            if(i < 4){
+        var popularbookslist = this.props.Books.map((books, i)=>{
+            if(i < 6){
             return(
-                <div className="col-4 col-sm-4 col-md-3 col-lg-3" key={i} style={{maxWidth:"280px"}}>
+                <div className="col-4 col-sm-4 col-md-3 col-lg-2 col-xl-2 cardmarign" key={i}>
                     
                     <Card className="card-top border-0 mb-4 card shadow rounded Cardshover">
+                        
                         <Link to= {{pathname : '/description', query : books}}>
-                        {/* <a href={""}> */}
-                            <Card.Img className="card-header bg-white" src={fiction2} variant="top" />
-                        {/* </a> */}
+                            <Card.Img className="card-header leftpaddingcard bg-white" src={fiction2} variant="top" />
                         </Link>
-                        <Card.Body className="card-body text-dark" >
-                            <a style={{ textDecoration: "none" }} href={""}>
-                                <Card.Title as="div" className="text-dark">
+                        
+                        <Card.Body className="card-body change-font text-dark" >
+                            <Card.Text as="div" className="cardtext">
+
+                                <div className="text-dark">
                                     <strong >{books.title}</strong>
                                     <br></br>
                                     <strong style={{fontWeight:"normal"}}>{books.author}</strong>
-                                </Card.Title>
-                            </a>
-                           
-                            <Card.Text as="div">
+                                </div>
+                                   
                                 <strong style={{ textDecorationLine: 'line-through' }}>Rs. {books.price}</strong>
                                 <strong style={{marginLeft:"7px",color:"red"}}>Rs. {books.sellprice}</strong>
-                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}>
-                                    {/* <Link to="/login"><i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i></Link> */}
-                                    <i className="text-primary " style={{fontSize:"20px"}}><FaCartPlus/></i>
-                                </button>
-                                <button class="btn btn-light border-0" style={{float:"right",marginLeft:"5px"}} onClick={this.decidenow.bind(this)}>
-                                    {/*<Link to="/login"><i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i></Link>*/}
-                                    <i className="text-danger " style={{fontSize:"20px"}}><FaHeart/></i>
-                                </button>   
-                                
-                                <br></br>   
-                            </Card.Text>
-                           
-                            {/*<Card.Text as="div">
-                                <Rating value={books.ratings} text={`reviews`} />
-                            </Card.Text>*/}
-                            
-                            <Card.Text as="div">
-                                <strong style={{float:"left"}} variant="link">
+
+                                <div>
+                                    <strong style={{float:"left"}} variant="link">
                                         <i className="text-warning"><FaStar/></i>
                                         <i className="text-warning"><FaStar/></i>
                                         <i className="text-warning"><FaStar/></i>
                                         <i className="text-warning"><FaStar/></i>
                                         <i className="text-warning"><FaStar/></i>
                                     </strong>
-                                <strong style={{marginLeft:"10px"}}>({books.discount}%)</strong>
+                                    <strong style={{marginLeft:"10px"}}>({books.discount}%)</strong>
+                                </div>
+
+                                <div className="aligncartwishlist">
+                                    <button class="btn btn-light border-0 cartbutton"  onClick={this.decidenow.bind(this)}>
+                                        <i className="text-primary "><FaCartPlus/></i>
+                                    </button>
+                                    <button class="btn btn-light border-0 wishlistbutton"   onClick={this.decidenow.bind(this)}>
+                                        <i className="text-danger "><FaHeart/></i>
+                                    </button> 
+                                </div>                               
+
                             </Card.Text>
-
-
-                            {/* <Card.Text as="div" className="card-text">
-                                {product.description}
-                            </Card.Text> */}
                         </Card.Body>
                     </Card>
                 </div>
@@ -107,3 +102,18 @@ export default class PopularBookPage extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    console.log('Inside Component ', state);
+    return {
+        Books: state.BookReducer.books
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        onFetchpopularBooks: (condition_popular)=>dispatch(actions.fetchbooksbyquery(condition_popular)),
+    }
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(PopularBookPage);

@@ -21,13 +21,7 @@ export default class Header extends Component {
                     <Navbar.Brand>
                         <Link to = {'/'}>
                         <div className="align-img-text">
-                            {/* <img
-                            alt=" logo "
-                            src={logo}
-                            width="80"
-                            // height="80"
-                            className="d-inline-block align-top headerLogo mt-0"
-                            /> */}
+                            {/* <img alt=" logo " src={logo} width="80"  height="80"  className="d-inline-block align-top headerLogo mt-0"/> */}
                             <p className="headerName">BOOK STORE</p>
                             </div>
                         </Link>
