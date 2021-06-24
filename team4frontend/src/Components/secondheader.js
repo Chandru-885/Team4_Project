@@ -52,13 +52,17 @@ export default class SecondHeader extends Component {
            
                 <nav className="navbar navbar-expand-lg navbar-light p-3">
                     <div id="navbarNavDropdown">
-                        <ul className="navbar-nav">
-                        <div className="alignright">
+                        <ul className="navbar-nav my-1">
+                        <div className="changelinksize">
+                            <div>
                             <Link to={"/allbookspage"}><Button variant="outline-primary border-0">All</Button></Link>
                             <Link to={"/todaydealspage"}><Button variant="outline-primary border-0">Today Deals</Button></Link>
                             <Link to={"/newrelease"}><Button variant="outline-primary border-0">New Releases</Button></Link>
                             <Link to={"/popularpage"}><Button variant="outline-primary border-0">Popular Books</Button></Link>
-                        </div>
+                            </div>
+
+                           
+                        
 
                             <div className="search">
                                 <div className="searchInputs">
@@ -82,6 +86,7 @@ export default class SecondHeader extends Component {
                                         })}
                                     </div>
                                 )}
+                            </div>
                             </div>
 
                         

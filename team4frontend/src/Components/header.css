@@ -8,7 +8,7 @@
   margin-top: 10px;
 }
 .align-img-text{
-  display: flexbox;
+  display: flex;
 }
 .headerName{
   margin-top: 20px;
@@ -22,7 +22,7 @@
 .headerSearchBar{
   display: inline !important;
   text-align: center;
-  width: 400px !important;
+  width: 360px !important;
   border-radius: 5px !important;
   /* border: 1px solid red !important; */
 }
@@ -44,4 +44,60 @@
 
 .headerButtons{
   margin-right: 20px;  
+}
+.loginsignup{
+  position: relative;
+}
+
+@media only screen and (max-width: 1220px){
+
+  .headerSearchBar{
+    width: 300px !important;
+  }
+  
+  .button2{
+    position: absolute;
+    top: 8px;
+    left: 70px;
+  }
+
+}@media only screen and (max-width: 900px){
+  .headerName{
+    margin-left: 0px;
+    font-size: 30px;
+  }
+  .button2{
+    position: absolute;
+    top: 8px;
+    left: 70px;
+  }
+
+}@media only screen and (max-width: 768px){
+  .headerName{
+    margin-left: 0px;
+    font-size: 30px;
+  }
+  .button2{
+    position: absolute;
+    top: 8px;
+    left: 70px;
+  }
+
+}
+@media only screen and (max-width: 480px){
+  .headerName{
+    margin-left: 0px;
+    font-size: 30px;
+  }
+
+  .headerSearchBar{
+    width: 220px !important;
+  }
+
+  .button2{
+    position: absolute;
+    top: 8px;
+    left: 70px;
+  }
+
 }

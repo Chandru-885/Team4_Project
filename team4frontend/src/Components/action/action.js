@@ -10,7 +10,7 @@ var FINDURL = () => {
     console.log("findurl",findurl)
 
     if(findurl === "allbookspage"){
-        FETCHQUERY = "/"
+        FETCHQUERY = "/?"
     }else if(findurl === "newrelease"){
         FETCHQUERY = "?sort=-date"
     }else if(findurl === "popularpage"){

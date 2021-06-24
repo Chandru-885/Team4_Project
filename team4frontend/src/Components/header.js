@@ -41,9 +41,9 @@ export default class Header extends Component {
                         </Form>
                     </Navbar.Collapse>
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-                        <Nav className="justify-content-end headerButtons">
-                        <Nav.Link href="#login"><Button variant="success">Login</Button></Nav.Link>
-                        <Nav.Link href="#signup"><Button variant="info">Sign Up</Button></Nav.Link>
+                        <Nav className="justify-content-end inline headerButtons loginsignup">
+                            <Nav.Link href="#login"><Button variant="success" className="button1">Login</Button></Nav.Link>
+                            <Nav.Link href="#signup"><Button variant="info"  className="button2">Sign Up</Button></Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

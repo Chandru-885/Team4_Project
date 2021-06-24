@@ -5,7 +5,6 @@ import { FaStar } from "react-icons/fa";
 import 'bootstrap/dist/css/bootstrap.css';
 
 import * as actions from './action/action'
-// import React, { useEffect } from 'react'
 import {connect} from 'react-redux';
 import arrow  from "./images/Arrow.png"
 
@@ -20,23 +19,6 @@ class Searchbar extends Component {
                           sortpriceLtoH : "&sort=price", sortpriceHtoL : "&sort=-price", sortdiscountLtoH : "&sort=discount", sortdiscounHtoL : "&sort=-discount",sortratingLtoH : "&sort=ratings",sortratingHtoL : "&sort=-ratings"   
                         }
     }
-
-    // price(selectedquery){
-    //     console.log("selectedquery",selectedquery)
-    //     var API = `http://localhost:4000/books/?${this.state.ratingsall}${selectedquery}`
-    //     console.log("API",API)
-    //     fetch(API,{
-    //         headers:{'content-type': 'application/json'},
-    //     })
-    //     .then(res=>res.json())
-    //     .then(data=>{
-    //         this.setState({popularbooks : data.data})
-    //     });
-    // }
-
-    // all(){
-
-    // }
 
     childrenAndTeen(querycondition){ this.props.onFetchChildrenAndTeen(querycondition) }
     travelandholiday(querycondition){ this.props.onFetchTravelandHoliday(querycondition) }
@@ -69,17 +51,16 @@ class Searchbar extends Component {
     render() {
         console.log("popularbooks",this.state.popularbooks)
         return (
-            
             <div className="pt-2" >
                 <div className="search1 mt-2" >
-                    <h4 style={{marginLeft:"18px"}} className="text-primary">Search Bar</h4>
+                    <h4 className="text-info">Search By</h4>
                     <div class="nav">
                     
                         <div class="multi-level ml-0">
                             
                             <div class="item">
                                 <input type="checkbox" id="A"/>
-                                <img src={arrow} class="arrow"/><label className="text-primary" for="A"> Categories</label>
+                                <img src={arrow} class="arrow"/><label className="text-primary" for="A">Categories</label>
                                 <ul className="ml-0">
                                     <li onClick={this.childrenAndTeen.bind(this,this.state.childrenteen)}>Childrens & Teens</li>
                                     <li onClick={this.Music.bind(this,this.state.music)}>Music</li>
@@ -90,7 +71,7 @@ class Searchbar extends Component {
                             
                             <div class="item">
                                 <input type="checkbox" id="B"/>
-                                <img src={arrow} class="arrow"/><label className="text-primary" for="B">Search By Price</label>
+                                <img src={arrow} class="arrow"/><label className="text-primary" for="B">Price</label>
                                 <ul>
                                     <li onClick={this.below500.bind(this,this.state.below_500)}>Below 500</li>
                                     <li onClick={this.aboveand500.bind(this,this.state.AboveEqual_500)}>500 and Above</li>
@@ -100,7 +81,7 @@ class Searchbar extends Component {
 
                             <div class="item">
                                 <input type="checkbox" id="C"/>
-                                <img src={arrow} class="arrow"/><label className="text-primary" for="C">Search By Discount</label>
+                                <img src={arrow} class="arrow"/><label className="text-primary" for="C">Discount</label>
                                 <ul>
                                     <li onClick={this.discount50andabove.bind(this,this.state.dis50andAbove)}>50% and Above</li>
                                     <li onClick={this.discount30andabove.bind(this,this.state.dis30andAbove)}>30% and Above</li>
@@ -110,7 +91,7 @@ class Searchbar extends Component {
 
                             <div class="item">
                                 <input type="checkbox" id="G"/>
-                                <img src={arrow} class="arrow"/><label className="text-primary" for="G">Search By Ratings</label>
+                                <img src={arrow} class="arrow"/><label className="text-primary" for="G">Rating</label>
                                 <ul>
                                     <li onClick={this.ratings5.bind(this,this.state.rating5)}>
                                         <i className="text-warning"><FaStar/></i>
@@ -140,9 +121,11 @@ class Searchbar extends Component {
                                 </ul>
                             </div>
 
+                            <h4 className="text-info">Sort By</h4>
+
                             <div class="item">
                                 <input type="checkbox" id="D"/>
-                                <img src={arrow} class="arrow"/><label className="text-primary" for="D">Sort By Price</label>
+                                <img src={arrow} class="arrow"/><label className="text-primary" for="D">Price</label>
                                 <ul>
                                     <li onClick={this.sortpricelowtohigh.bind(this,this.state.sortpriceLtoH)}>Low to High</li>
                                     <li onClick={this.sortpricehightolow.bind(this,this.state.sortpriceHtoL)}>High to Low</li>
@@ -151,7 +134,7 @@ class Searchbar extends Component {
 
                             <div class="item">
                                 <input type="checkbox" id="E"/>
-                                <img src={arrow} class="arrow"/><label className="text-primary" for="E">Sort By Discount</label>
+                                <img src={arrow} class="arrow"/><label className="text-primary" for="E">Discount</label>
                                 
                                 <ul>
                                     <li onClick={this.sortdiscountlowtohigh.bind(this,this.state.sortdiscountLtoH)}>Low to High</li>
@@ -161,7 +144,7 @@ class Searchbar extends Component {
 
                             <div class="item">
                                 <input type="checkbox" id="F"/>
-                                <img src={arrow} class="arrow"/><label className="text-primary" for="F">Sort By Ratings</label>
+                                <img src={arrow} class="arrow"/><label className="text-primary" for="F">Rating</label>
                                 
                                 <ul>
                                     <li onClick={this.sortratingslowtohigh.bind(this,this.state.sortratingLtoH)}>Low to High</li>
@@ -182,13 +165,6 @@ class Searchbar extends Component {
     }
 }
 
-// const mapStateToProps = (state) => {
-//     console.log('Inside Component ', state);
-//     return {
-//         Books: state.BookReducer.books
-//     }
-//   }
-  
   const mapDispatchToProps = (dispatch) => {
     return {
         onFetchChildrenAndTeen : (querycondition) => dispatch(actions.fetchbooksbyquery(querycondition)),
@@ -224,6 +200,29 @@ class Searchbar extends Component {
   
   export default connect(null, mapDispatchToProps)(Searchbar);
 
+// const mapStateToProps = (state) => {
+//     console.log('Inside Component ', state);
+//     return {
+//         Books: state.BookReducer.books
+//     }
+//   }
+  
+    // price(selectedquery){
+    //     console.log("selectedquery",selectedquery)
+    //     var API = `http://localhost:4000/books/?${this.state.ratingsall}${selectedquery}`
+    //     console.log("API",API)
+    //     fetch(API,{
+    //         headers:{'content-type': 'application/json'},
+    //     })
+    //     .then(res=>res.json())
+    //     .then(data=>{
+    //         this.setState({popularbooks : data.data})
+    //     });
+    // }
+
+    // all(){
+
+    // }
 
 // onFetchPricebelow500 : () => dispatch(actions.fetchbooksbypricebelow500()),
 // onFetchPrice500andabove : () => dispatch(actions.fetchbooksbyprice500andabove()),
