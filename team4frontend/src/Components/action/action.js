@@ -34,7 +34,6 @@ var CONDITION = (givencondition) =>{
 }
 
 export const fetchbooksbyquery = (givencondition) => {
-
     let query = FINDURL();
     console.log("query",query);
     let condition = CONDITION(givencondition)
@@ -63,7 +62,7 @@ export const fetchheadersearchresults = (searchvalue) => {
             })
             .then(data =>data.json()) 
             .then(res=>{
-
+                // this.setstate({books:res.data})
                 dispatch({
                     type : GET_BOOKS_BY_HEADERSEARCHQUERY,
                     payload : res
