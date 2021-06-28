@@ -17,22 +17,12 @@ class PopularBookPage extends Component {
 
     constructor(){
         super();
-        this.state = {popularbooks : [] , popular : "/?sort=-ratings"}
+        this.state = {popularbooks : [] , popular : "sort=-ratings&limit=6"}
     }
 
     componentDidMount(){
         this.props.onFetchpopularBooks(this.state.popular);
     }
-    // componentDidMount(){
-    //     fetch('http://localhost:4000'+'/books/?sort=-ratings',{
-    //         headers:{'content-type': 'application/json'},
-    //     })
-    //     .then(res=>res.json())
-    //     .then(data=>{
-    //         this.setState({popularbooks : data.data})
-    //     });
-    //     console.log("alldeals",this.state.popularbooks)
-    // }
 
     decidenow(){
         console.log("decide function")
@@ -40,10 +30,8 @@ class PopularBookPage extends Component {
         this.props.history.push('/login')
     }
 
-
     render() {
-        var popularbookslist = this.props.Books.map((books, i)=>{
-            if(i < 6){
+        var popularbookslist = this.props.popularBooks.map((books, i)=>{
             return(
                 <div className="col-4 col-sm-4 col-md-3 col-lg-2 col-xl-2 cardmarign" key={i}>
                     
@@ -90,7 +78,7 @@ class PopularBookPage extends Component {
                     </Card>
                 </div>
             )
-            }
+            
         })
         
         return (
@@ -106,14 +94,25 @@ class PopularBookPage extends Component {
 const mapStateToProps = (state) => {
     console.log('Inside Component ', state);
     return {
-        Books: state.BookReducer.books
+        popularBooks : state.BookReducer.homepagepopularbooks
     }
   }
   
   const mapDispatchToProps = (dispatch) => {
     return {
-        onFetchpopularBooks: (condition_popular)=>dispatch(actions.fetchbooksbyquery(condition_popular)),
+        onFetchpopularBooks: (condition_popular)=>dispatch(actions.fetchbooksHomepagepopularbooks(condition_popular)),
     }
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(PopularBookPage);
+
+      // componentDidMount(){
+    //     fetch('http://localhost:4000'+'/books/?sort=-ratings',{
+    //         headers:{'content-type': 'application/json'},
+    //     })
+    //     .then(res=>res.json())
+    //     .then(data=>{
+    //         this.setState({popularbooks : data.data})
+    //     });
+    //     console.log("alldeals",this.state.popularbooks)
+    // }

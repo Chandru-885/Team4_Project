@@ -1,3 +1,7 @@
+.headersearchimg{
+    margin: auto;
+    width: fit-content;
+}
 .Main{
     width: 100%;
     box-sizing: border-box;

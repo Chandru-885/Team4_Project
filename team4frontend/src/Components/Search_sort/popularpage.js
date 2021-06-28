@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Card,Carousel} from 'react-bootstrap' 
+import {Card,Carousel,Button} from 'react-bootstrap' 
 import fiction2  from "../images/fiction1.JPG"
 import {Link} from "react-router-dom";
 import SearchPage from '../searchbar';
@@ -17,16 +17,29 @@ import {connect} from 'react-redux';
 
     constructor(props){
         super(props);
-        this.state = {popularbooks : []}
+        this.state = {current:1}
     }
 
     componentDidMount() {
-        this.props.onFetchPopularBooks();
+      this.props.onFetchAllbooks(this.state.current);
     }
 
    nextpage(){
     this.props.history.push('/description')
    }
+
+   changenext(){
+    var cur = this.state.current;
+    this.setState({current: this.state.current+1})
+    cur=cur+1
+    this.props.onFetchAllbooks(cur)
+  }
+   changeprev(){
+    var cur = this.state.current;
+    this.setState({current: this.state.current-1})
+    cur=cur-1
+    this.props.onFetchAllbooks(cur)
+  }
 
    decidenow(){
         console.log("decide function")
@@ -35,8 +48,34 @@ import {connect} from 'react-redux';
     }
 
     render() {
+        var showprevbutton = true
+        var shownextbutton = true
+        console.log("this.props.Books",this.props.Books)
 
-        var popularbookslist = this.props.Books.map((books, i)=>{
+        if(this.state.current !== 1){
+            showprevbutton = false
+        }
+
+        if(this.props.Books.length === 0 || this.props.Books.length !== 12){
+            shownextbutton = true
+
+            if(this.props.Books.length === 0){
+                var popularbookslist = (
+                    <div className="alert alert-dismissible alert-info m-3">
+                        <strong>No Data Available !</strong>
+                        <p>Click <b>Prev</b> to move to before page</p>
+                        <Button class="page-link" onClick={this.changeprev.bind(this)} disabled={showprevbutton}>Prev</Button>
+                    </div>)
+            }
+        }
+
+        if(this.props.Books.length === 12 || this.props.Books.length > 0){
+
+            if(this.props.Books.length === 12){
+                shownextbutton = false
+            }
+
+            var popularbookslist = this.props.Books.map((books, i)=>{
             // if(i < 4){
             return(
                 <div className="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 cardmarign" key={i} >
@@ -85,6 +124,7 @@ import {connect} from 'react-redux';
                 </div>
             )
         })
+    }
         
         return (
             <>
@@ -139,6 +179,20 @@ import {connect} from 'react-redux';
                                 </div>
                             </div>
                        </div>
+                       <div className="row">
+                            <ul className="justify-content-center align-items-center pagination pagination-lg">
+                                <li class="page-item list-unstyled">
+                                    <Button class="page-link mr-1" onClick={this.changeprev.bind(this)} disabled={showprevbutton}>Prev</Button>
+                                </li>
+                                <li class="page-item list-unstyled">
+                                    <Button class="page-link mr-1" >{this.state.current}</Button>
+                                </li>
+                                <li class="page-item list-unstyled">
+                                    <Button class="page-link mr-1" onClick={this.changenext.bind(this)} disabled={shownextbutton}>Next</Button>
+                                </li>
+                            </ul>
+
+                         </div>
                     </div>
                 </div>
 
@@ -163,21 +217,20 @@ import {connect} from 'react-redux';
         )
     }
 }
-    const mapStateToProps = (state) => {
-        console.log('Inside Component ', state);
-        return {
-            Books: state.BookReducer.books
-        }
-      }
+const mapStateToProps = (state) => {
+    console.log('Inside Component ', state);
+    return {
+        Books: state.BookReducer.books
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        onFetchAllbooks: (curr_page)=>dispatch(actions.fetchbooksbyquery(curr_page)),
+    }
+  }
       
-      const mapDispatchToProps = (dispatch) => {
-        return {
-            // onFetchPopularBooks : ()=>dispatch(actions.fetchbooksbypopularbooks()),
-            onFetchPopularBooks : ()=>dispatch(actions.fetchbooksbyquery()),
-        }
-      }
-      
-      export default connect(mapStateToProps, mapDispatchToProps)(PopularPage);
+export default connect(mapStateToProps, mapDispatchToProps)(PopularPage);
    
 
 

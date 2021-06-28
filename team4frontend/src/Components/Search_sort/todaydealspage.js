@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Button,Card,Row,Container} from 'react-bootstrap' 
+import {Button,Card} from 'react-bootstrap' 
 import fiction2  from "../images/fiction2.JPG"
 import SearchPage from '../searchbar';
 import { FaCartPlus } from "react-icons/fa";
@@ -17,11 +17,24 @@ class TodayDealsPage extends Component {
 
     constructor(props){
         super(props);
-        this.state = {todaydealslist : []}
+        this.state = {current:1}
     }
 
      componentDidMount(){
-            this.props.onFetchNewtodaydeals();
+      this.props.onFetchAllbooks(this.state.current);
+    }
+
+        changenext(){
+            var cur = this.state.current;
+            this.setState({current: this.state.current+1})
+            cur=cur+1
+            this.props.onFetchAllbooks(cur)
+        }
+        changeprev(){
+            var cur = this.state.current;
+            this.setState({current: this.state.current-1})
+            cur=cur-1
+            this.props.onFetchAllbooks(cur)
         }
 
     decidenow(){
@@ -32,7 +45,34 @@ class TodayDealsPage extends Component {
 
 
     render() {
-        var DealsBooklist = this.props.Books.map((books, i)=>{
+        var showprevbutton = true
+        var shownextbutton = true
+        console.log("this.props.Books",this.props.Books)
+
+        if(this.state.current !== 1){
+            showprevbutton = false
+        }
+
+        if(this.props.Books.length === 0 || this.props.Books.length !== 12){
+            shownextbutton = true
+
+            if(this.props.Books.length === 0){
+                var allbookslist = (
+                    <div className="alert alert-dismissible alert-info m-3">
+                        <strong>No Data Available !</strong>
+                        <p>Click <b>Prev</b> to move to before page</p>
+                        <Button class="page-link" onClick={this.changeprev.bind(this)} disabled={showprevbutton}>Prev</Button>
+                    </div>)
+            }
+        }
+
+        if(this.props.Books.length === 12 || this.props.Books.length > 0){
+
+            if(this.props.Books.length === 12){
+                shownextbutton = false
+            }
+
+           var DealsBooklist = this.props.Books.map((books, i)=>{
            // if(i < 4){
             return(
                 <div className="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 cardmarign" key={i} >
@@ -83,6 +123,7 @@ class TodayDealsPage extends Component {
             )
             //}
         })
+    }
         
         return (
             <>
@@ -116,6 +157,20 @@ class TodayDealsPage extends Component {
                                 </div>
                             </div>
                        </div>
+                       <div className="row">
+                            <ul className="justify-content-center align-items-center pagination pagination-lg">
+                                <li class="page-item list-unstyled">
+                                    <Button class="page-link mr-1" onClick={this.changeprev.bind(this)} disabled={showprevbutton}>Prev</Button>
+                                </li>
+                                <li class="page-item list-unstyled">
+                                    <Button class="page-link mr-1" >{this.state.current}</Button>
+                                </li>
+                                <li class="page-item list-unstyled">
+                                    <Button class="page-link mr-1" onClick={this.changenext.bind(this)} disabled={shownextbutton}>Next</Button>
+                                </li>
+                            </ul>
+
+                         </div>
                     </div>
                 </div>
         
@@ -139,19 +194,18 @@ class TodayDealsPage extends Component {
     }
 
 }
-    const mapStateToProps = (state) => {
-        console.log('Inside Component ', state);
-        return {
-            Books: state.BookReducer.books
-        }
-      }
-      
-      const mapDispatchToProps = (dispatch) => {
-        return {
-            // onFetchNewtodaydeals: ()=>dispatch(actions.fetchbooksbytodaydeals()),
-            onFetchNewtodaydeals: ()=>dispatch(actions.fetchbooksbyquery()),
-        }
-      }
+const mapStateToProps = (state) => {
+    console.log('Inside Component ', state);
+    return {
+        Books: state.BookReducer.books
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        onFetchAllbooks: (curr_page)=>dispatch(actions.fetchbooksbyquery(curr_page)),
+    }
+  }
       
       export default connect(mapStateToProps, mapDispatchToProps)(TodayDealsPage);
 
